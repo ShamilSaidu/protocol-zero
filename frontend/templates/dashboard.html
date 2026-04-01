@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protocol Zero</title>
+  <style>
+    :root {
+      --bg: #f3efe6;
+      --panel: rgba(255,255,255,0.78);
+      --ink: #1d2733;
+      --muted: #66727f;
+      --line: rgba(29,39,51,0.12);
+      --accent: #e56b32;
+      --accent-2: #1f6f8b;
+      --good: #1f8a70;
+      --warn: #c56a1a;
+      --bad: #ba3b46;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(229,107,50,0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(31,111,139,0.18), transparent 30%),
+        linear-gradient(135deg, #f6f1e8, #e7eef3 55%, #f8f3ec);
+      min-height: 100vh;
+    }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .panel {
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(29,39,51,0.08);
+    }
+    .hero-copy {
+      padding: 28px;
+    }
+    .kicker { text-transform: uppercase; letter-spacing: 0.18em; font-size: 12px; color: var(--accent-2); }
+    h1 { margin: 10px 0 8px; font-size: 48px; line-height: 0.95; }
+    .lead { margin: 0; color: var(--muted); max-width: 56ch; font-size: 16px; line-height: 1.6; }
+    .hero-meta { padding: 24px; display: grid; gap: 12px; }
+    .meta-card, .stat-card { padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,0.7); }
+    .meta-title, .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); margin-bottom: 8px; }
+    .meta-value, .value { font-size: 28px; font-weight: 700; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .actions { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; margin-bottom: 24px; }
+    .section { padding: 24px; }
+    .section h2 { margin: 0 0 18px; font-size: 18px; }
+    .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    select, input, button {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+      font: inherit;
+      background: white;
+    }
+    button {
+      background: var(--ink);
+      color: white;
+      cursor: pointer;
+      transition: transform 160ms ease, opacity 160ms ease;
+    }
+    button.secondary { background: var(--accent-2); }
+    button:hover { transform: translateY(-1px); opacity: 0.95; }
+    .tables { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+    .pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; }
+    .pill.bad { background: rgba(186,59,70,0.14); color: var(--bad); }
+    .pill.warn { background: rgba(197,106,26,0.16); color: var(--warn); }
+    .pill.good { background: rgba(31,138,112,0.16); color: var(--good); }
+    .detail-card { padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,0.72); min-height: 360px; }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #24313e;
+    }
+    @media (max-width: 980px) {
+      .hero, .actions, .tables, .grid, .row { grid-template-columns: 1fr; }
+      h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="panel hero-copy">
+        <div class="kicker">Autonomous SRE Incident Commander</div>
+        <h1>Protocol Zero</h1>
+        <p class="lead">A durable MVP that detects incidents, runs multi-agent investigation, proposes remediation, prepares code-fix artifacts, and writes post-mortems with a human-review safety layer.</p>
+      </div>
+      <div class="panel hero-meta">
+        <div class="meta-card">
+          <div class="meta-title">Mode</div>
+          <div class="meta-value" id="mode">Dry Run</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-title">Database</div>
+          <div class="meta-value" id="db">Loading...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel stat-card"><div class="label">Active</div><div class="value" id="active">0</div></div>
+      <div class="panel stat-card"><div class="label">Resolved</div><div class="value" id="resolved">0</div></div>
+      <div class="panel stat-card"><div class="label">Total</div><div class="value" id="total">0</div></div>
+      <div class="panel stat-card"><div class="label">Detector</div><div class="value" id="detector">Idle</div></div>
+    </section>
+
+    <section class="actions">
+      <div class="panel section">
+        <h2>Trigger Manual Incident</h2>
+        <div class="row">
+          <select id="service">
+            <option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option>
+          </select>
+          <select id="incidentType">
+            <option value="pod_restart_loop">pod_restart_loop</option>
+            <option value="cpu_spike">cpu_spike</option>
+            <option value="memory_spike">memory_spike</option>
+            <option value="deployment_unavailable">deployment_unavailable</option>
+          </select>
+          <select id="severity">
+            <option>critical</option><option>high</option><option>medium</option>
+          </select>
+          <button onclick="triggerIncident()">Trigger and Process</button>
+        </div>
+      </div>
+      <div class="panel section">
+        <h2>Detection Controls</h2>
+        <div class="row">
+          <button class="secondary" onclick="runDetector(true)">Run Detector</button>
+          <button class="secondary" onclick="refreshAll()">Refresh</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="tables">
+      <div class="panel section">
+        <h2>Incident Timeline</h2>
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Service</th><th>Type</th><th>Status</th><th>Updated</th></tr>
+          </thead>
+          <tbody id="incidentRows"></tbody>
+        </table>
+      </div>
+      <div class="panel section">
+        <h2>Incident Detail</h2>
+        <div class="detail-card"><pre id="detail">Select an incident to inspect its orchestration state.</pre></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    async function fetchJSON(url, options) {
+      const response = await fetch(url, options);
+      if (!response.ok) throw new Error(await response.text());
+      return response.json();
+    }
+
+    async function refreshStats() {
+      const stats = await fetchJSON('/api/stats');
+      document.getElementById('active').textContent = stats.active || 0;
+      document.getElementById('resolved').textContent = stats.resolved || 0;
+      document.getElementById('total').textContent = stats.total_incidents || 0;
+      document.getElementById('mode').textContent = stats.dry_run_mode ? 'Dry Run' : 'Live';
+      document.getElementById('db').textContent = stats.database_url || 'n/a';
+      document.getElementById('detector').textContent = stats.background_detector ? 'Background' : 'Manual';
+    }
+
+    async function refreshIncidents() {
+      const payload = await fetchJSON('/api/incidents');
+      const tbody = document.getElementById('incidentRows');
+      tbody.innerHTML = '';
+      for (const incident of payload.incidents || []) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><button onclick="loadIncident('${incident.incident_id}')">${incident.incident_id}</button></td>
+          <td>${incident.service_affected || incident.payload?.service_affected || 'unknown'}</td>
+          <td>${incident.incident_type || incident.payload?.type || 'unknown'}</td>
+          <td><span class="pill ${badgeClass(incident.status)}">${incident.status}</span></td>
+          <td>${incident.updated_at || ''}</td>
+        `;
+        tbody.appendChild(row);
+      }
+    }
+
+    function badgeClass(status) {
+      if (['resolved'].includes(status)) return 'good';
+      if (['simulated','needs_review','suggested'].includes(status)) return 'warn';
+      return 'bad';
+    }
+
+    async function loadIncident(id) {
+      const incident = await fetchJSON(`/api/incidents/${id}`);
+      document.getElementById('detail').textContent = JSON.stringify(incident, null, 2);
+    }
+
+    async function triggerIncident() {
+      const body = {
+        service: document.getElementById('service').value,
+        incident_type: document.getElementById('incidentType').value,
+        severity: document.getElementById('severity').value,
+      };
+      const incident = await fetchJSON('/api/incidents/trigger', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      document.getElementById('detail').textContent = JSON.stringify(incident, null, 2);
+      await refreshAll();
+    }
+
+    async function runDetector(autoProcess) {
+      const payload = await fetchJSON(`/api/incidents/detect?auto_process=${autoProcess}`, { method: 'POST' });
+      document.getElementById('detail').textContent = JSON.stringify(payload, null, 2);
+      await refreshAll();
+    }
+
+    async function refreshAll() {
+      await Promise.all([refreshStats(), refreshIncidents()]);
+    }
+
+    refreshAll();
+    setInterval(refreshAll, 8000);
+  </script>
+</body>
+</html>

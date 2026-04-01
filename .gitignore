@@ -1,4 +1,4 @@
-﻿venv/
+venv/
 __pycache__/
 *.pyc
 *.pyo
@@ -12,3 +12,9 @@ dist/
 build/
 node_modules/
 post_mortems/
+sample-app/
+docs/codefixes/
+protocol_zero.db
+tmp-loki-configmap.json
+Prometheus run.txt
+
