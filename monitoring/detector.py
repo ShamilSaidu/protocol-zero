@@ -6,6 +6,7 @@ import os
 import time
 from typing import Iterable
 
+from integrations.service_catalog import CATALOG
 from monitoring.metrics_collector import MetricsCollector
 from monitoring.models import DetectionThresholds, Incident, MetricsSnapshot, build_incident_id, utc_now_iso
 
@@ -22,6 +23,7 @@ class IncidentDetector:
         self.collector = collector or MetricsCollector(namespace=namespace)
         self.thresholds = thresholds or DetectionThresholds()
         self.namespace = namespace or os.getenv("KUBE_NAMESPACE", "default")
+        self.include_infra_services = os.getenv("INCLUDE_INFRA_SERVICES", "false").lower() == "true"
 
     def collect_and_detect(self) -> list[dict[str, object]]:
         snapshot = self.collector.collect()
@@ -47,6 +49,8 @@ class IncidentDetector:
             if value < self.thresholds.pod_restart_threshold:
                 continue
             service = service_name_from_workload(pod)
+            if not self._should_include_service(service):
+                continue
             incidents.append(
                 self._build_incident(
                     incident_type="pod_restart_loop",
@@ -69,6 +73,8 @@ class IncidentDetector:
             if value < self.thresholds.cpu_threshold_pct:
                 continue
             service = service_name_from_workload(pod)
+            if not self._should_include_service(service):
+                continue
             incidents.append(
                 self._build_incident(
                     incident_type="cpu_spike",
@@ -91,6 +97,8 @@ class IncidentDetector:
             if value < self.thresholds.memory_threshold_mb:
                 continue
             service = service_name_from_workload(pod)
+            if not self._should_include_service(service):
+                continue
             incidents.append(
                 self._build_incident(
                     incident_type="memory_spike",
@@ -111,6 +119,8 @@ class IncidentDetector:
         incidents: list[Incident] = []
         for deployment, value in snapshot.unavailable_replicas.items():
             if value < self.thresholds.deployment_unavailable_threshold:
+                continue
+            if not self._should_include_service(deployment):
                 continue
             incidents.append(
                 self._build_incident(
@@ -150,6 +160,11 @@ class IncidentDetector:
             metrics_snapshot=snapshot.as_dict(),
             namespace=self.namespace,
         )
+
+    def _should_include_service(self, service: str) -> bool:
+        if self.include_infra_services:
+            return True
+        return service in CATALOG
 
 
 def service_name_from_workload(name: str) -> str:

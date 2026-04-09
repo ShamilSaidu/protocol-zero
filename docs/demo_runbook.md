@@ -9,6 +9,8 @@ By the end of the run, you will be able to show:
 - Prometheus scraping live metrics
 - Grafana showing live metrics and live logs through Loki
 - the Protocol Zero dashboard and API
+- Protocol Zero showing its own Redis-backed activity stream
+- Protocol Zero showing recent Loki log lines directly in the dashboard
 - a full incident workflow from trigger or detection through investigation, reasoning, remediation, code-fix artifact generation, and post-mortem generation
 
 ## Assumptions
@@ -152,6 +154,21 @@ Verify these pages:
 - `http://localhost:9090`
 - `http://localhost:3000`
 
+In Protocol Zero itself, you should now see:
+- `Redis: Live` when Redis is reachable
+- `Loki: Live` when Loki is reachable
+- an `Activity Stream` panel fed by Redis
+- a `Live Loki Logs` panel that can query logs for a service
+
+Quick API verification:
+
+```powershell
+Invoke-RestMethod http://localhost:8000/health
+Invoke-RestMethod http://localhost:8000/api/stats
+Invoke-RestMethod http://localhost:8000/api/events
+Invoke-RestMethod "http://localhost:8000/api/logs?service=cartservice&since_minutes=15&limit=20"
+```
+
 ## Step 7: Provision the Grafana demo dashboard
 
 Run this after the Grafana port-forward is active:
@@ -235,6 +252,7 @@ Before presenting, keep these open:
 3. Open Grafana and show the `Protocol Zero Demo` dashboard
 4. Point out the live Loki logs panel
 5. Open the Protocol Zero dashboard at `http://localhost:8000`
+6. Point out the `Activity Stream` panel and the `Live Loki Logs` panel in Protocol Zero itself
 
 ### B. Show the guaranteed end-to-end flow with a manual incident
 
@@ -260,6 +278,7 @@ Expected result:
 - remediation is proposed in dry-run mode
 - a code-fix artifact is generated
 - a post-mortem is generated
+- the activity stream updates with runtime and incident events
 - the incident appears in the dashboard timeline
 
 ### C. Show the stored incident detail
@@ -280,6 +299,14 @@ Inject a fault:
 
 ```powershell
 .\scripts\chaos.ps1 -Action kill-pod -Service cartservice
+```
+
+Note:
+- `kill-pod` is useful for a pod-level failure demonstration.
+- If you specifically want a `deployment_unavailable` incident, use:
+
+```powershell
+.\scripts\chaos.ps1 -Action deployment-outage -Service cartservice
 ```
 
 Then run detection:
@@ -311,7 +338,18 @@ Get-ChildItem .\docs\codefixes
 Get-Content .\docs\codefixes\<incident-id>.md
 ```
 
-## Step 13: Troubleshooting
+## Step 13: Run the demo smoke tests
+
+From the repo root with the virtual environment active:
+
+```powershell
+python -m pytest tests\test_api_smoke.py -v
+python -m pytest tests\test_integrations.py -v
+python -m pytest tests\test_repository.py -v
+python -m pytest tests -v
+```
+
+## Step 14: Troubleshooting
 
 If Grafana opens but panels are empty:
 - make sure the Prometheus and Loki port-forwards are still running
@@ -339,7 +377,7 @@ kubectl get pods
 
 Confirm the target service has a running pod.
 
-## Step 14: Shortest repeatable demo path
+## Step 15: Shortest repeatable demo path
 
 If you need the shortest reliable setup:
 

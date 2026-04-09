@@ -1,0 +1,142 @@
+Use this as your actual presentation flow once the stack is already up. The safest way to demo this is to show two things in order:
+
+the observability stack is live
+Protocol Zero can take an incident from detection/trigger through investigation, reasoning, remediation planning, and reporting
+Before You Start
+Have these already open:
+
+http://localhost:8080
+http://localhost:9090
+http://localhost:3000/d/protocol-zero-demo/protocol-zero-demo
+http://localhost:8000
+http://localhost:8000/docs
+Keep these PowerShell windows open:
+
+kubectl port-forward svc/frontend 8080:80
+kubectl port-forward svc/prometheus-kube-prometheus-prometheus 9090:9090
+kubectl port-forward svc/prometheus-grafana 3000:80
+kubectl port-forward svc/loki 3100:3100
+python main.py
+If you want the full written checklist beside you, use:
+
+README.md
+docs/demo_runbook.md
+Recommended Demo Story
+Say this in simple terms:
+
+“This is an autonomous SRE incident-response MVP for Kubernetes.”
+“It watches observability data, detects failures, investigates them with multiple agents, reasons about likely root cause, proposes remediation safely, and generates artifacts like post-mortems and code-fix suggestions.”
+Then walk through this order.
+
+Show the application at http://localhost:8080
+Click around a product page or cart flow.
+Say: “This is the live microservice application we’re monitoring.”
+Show Prometheus at http://localhost:9090
+Run:
+up
+Then run:
+sum by (pod) (rate(container_cpu_usage_seconds_total{namespace="default",pod!=""}[5m]))
+Say: “Prometheus is collecting live cluster metrics. This is the raw signal Protocol Zero uses for metric-based detection.”
+Show Grafana at http://localhost:3000/d/protocol-zero-demo/protocol-zero-demo
+Log in with admin / admin123 if needed.
+Point out:
+Targets Up
+CPU by pod
+Memory by pod
+Restart count
+Live Loki logs
+Say: “Grafana gives us the live observability view, including logs through Loki.”
+Show Protocol Zero dashboard at http://localhost:8000
+Point out the dashboard sections:
+incident trigger form
+detector controls
+incident timeline
+incident detail panel
+Say: “This is the control plane for the incident workflow.”
+Main Demo: Reliable End-to-End Flow
+This is the safest primary demo. Use the manual trigger first.
+
+In Protocol Zero, trigger a manual incident
+service: cartservice
+incident type: pod_restart_loop
+severity: critical
+click Trigger and Process
+What to say while it runs:
+
+“I’m triggering a realistic incident.”
+“Protocol Zero is now creating a normalized incident object.”
+“The investigation, developer, and devops agents run in parallel.”
+“Their findings are correlated into a likely hypothesis.”
+“A safety layer checks whether remediation should be proposed or executed.”
+“Because this demo is in dry-run mode, it will simulate the action instead of making a destructive production change.”
+Open the created incident from the timeline
+Show these fields in the detail JSON:
+investigation_findings
+selected_hypothesis
+verification
+remediation
+code_fix
+postmortem
+What to say:
+
+“These are the multi-agent findings.”
+“This is the selected root-cause hypothesis.”
+“This shows the safety and confidence check.”
+“This is the remediation plan.”
+“This is the generated code-fix artifact.”
+“This is the generated post-mortem.”
+How To Prove It’s Real
+After showing the incident detail, show the generated artifacts on disk.
+
+Run:
+
+Get-ChildItem .\post_mortems
+Get-ChildItem .\docs\codefixes
+If you want to open one:
+
+Get-Content .\post_mortems\<incident-id>.md
+Get-Content .\docs\codefixes\<incident-id>.md
+Say:
+
+“The system doesn’t just display UI state. It persists the incident and writes concrete artifacts for handoff and review.”
+Optional Advanced Demo: Real Fault Injection
+If time allows, do this after the manual flow, not before.
+
+Inject a real fault
+.\scripts\chaos.ps1 -Action kill-pod -Service cartservice
+Then trigger detection
+Invoke-RestMethod -Uri "http://localhost:8000/api/incidents/detect?auto_process=true" -Method POST
+What to say:
+
+“Now I’m creating a real cluster fault.”
+“Protocol Zero is detecting from observability rather than a manual trigger.”
+“The rest of the workflow is the same: investigation, reasoning, remediation planning, and reporting.”
+Best Talking Points
+Use these to keep the panel focused:
+
+“The monitoring layer is real: Prometheus, Grafana, Loki, and Promtail are live.”
+“The application is live on Kubernetes in Minikube.”
+“The incident workflow is real end to end.”
+“The remediation layer is safety-gated.”
+“The MVP is designed for trust first, so dry-run mode is enabled for demo safety.”
+If Something Goes Wrong
+If Prometheus looks empty:
+
+run up
+say: “Prometheus starts with an empty query screen by default.”
+If Grafana looks empty:
+
+refresh the Protocol Zero Demo dashboard
+rerun:
+.\scripts\provision_grafana_demo_dashboard.ps1
+If Protocol Zero dashboard is empty:
+
+trigger the manual incident first
+refresh the page
+Best 5-Minute Demo Structure
+
+1 minute: app + Prometheus + Grafana
+2 minutes: Protocol Zero trigger and processing
+1 minute: incident detail and artifacts
+1 minute: explain dry-run remediation and future production path
+If you want, I can turn this next into a literal presenter script with exact sentences to say out loud, slide by slide and click by click.

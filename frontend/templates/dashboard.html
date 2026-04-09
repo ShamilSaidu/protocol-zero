@@ -3,248 +3,211 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Protocol Zero</title>
+  <title>Protocol 0 Mission Control</title>
   <style>
-    :root {
-      --bg: #f3efe6;
-      --panel: rgba(255,255,255,0.78);
-      --ink: #1d2733;
-      --muted: #66727f;
-      --line: rgba(29,39,51,0.12);
-      --accent: #e56b32;
-      --accent-2: #1f6f8b;
-      --good: #1f8a70;
-      --warn: #c56a1a;
-      --bad: #ba3b46;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(229,107,50,0.18), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(31,111,139,0.18), transparent 30%),
-        linear-gradient(135deg, #f6f1e8, #e7eef3 55%, #f8f3ec);
-      min-height: 100vh;
-    }
-    .shell {
-      max-width: 1320px;
-      margin: 0 auto;
-      padding: 28px;
-    }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-    .panel {
-      background: var(--panel);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(29,39,51,0.08);
-    }
-    .hero-copy {
-      padding: 28px;
-    }
-    .kicker { text-transform: uppercase; letter-spacing: 0.18em; font-size: 12px; color: var(--accent-2); }
-    h1 { margin: 10px 0 8px; font-size: 48px; line-height: 0.95; }
-    .lead { margin: 0; color: var(--muted); max-width: 56ch; font-size: 16px; line-height: 1.6; }
-    .hero-meta { padding: 24px; display: grid; gap: 12px; }
-    .meta-card, .stat-card { padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,0.7); }
-    .meta-title, .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted); margin-bottom: 8px; }
-    .meta-value, .value { font-size: 28px; font-weight: 700; }
-    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-    .actions { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; margin-bottom: 24px; }
-    .section { padding: 24px; }
-    .section h2 { margin: 0 0 18px; font-size: 18px; }
-    .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-    select, input, button {
-      width: 100%;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      padding: 12px 14px;
-      font: inherit;
-      background: white;
-    }
-    button {
-      background: var(--ink);
-      color: white;
-      cursor: pointer;
-      transition: transform 160ms ease, opacity 160ms ease;
-    }
-    button.secondary { background: var(--accent-2); }
-    button:hover { transform: translateY(-1px); opacity: 0.95; }
-    .tables { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 12px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-    th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
-    .pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; }
-    .pill.bad { background: rgba(186,59,70,0.14); color: var(--bad); }
-    .pill.warn { background: rgba(197,106,26,0.16); color: var(--warn); }
-    .pill.good { background: rgba(31,138,112,0.16); color: var(--good); }
-    .detail-card { padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,0.72); min-height: 360px; }
-    pre {
-      margin: 0;
-      white-space: pre-wrap;
-      word-break: break-word;
-      font-family: Consolas, monospace;
-      font-size: 12px;
-      line-height: 1.5;
-      color: #24313e;
-    }
-    @media (max-width: 980px) {
-      .hero, .actions, .tables, .grid, .row { grid-template-columns: 1fr; }
-      h1 { font-size: 36px; }
-    }
+    :root{--bg:#06101e;--bg2:#0c1a2d;--panel:rgba(8,17,31,.86);--card:rgba(255,255,255,.04);--line:rgba(175,210,255,.14);--line2:rgba(175,210,255,.28);--text:#eef5ff;--muted:#92a8c7;--blue:#4db8ff;--orange:#ff9552;--green:#7fe2a2;--yellow:#ffc76a;--red:#ff7f7f;--shadow:0 24px 80px rgba(0,0,0,.34)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:"Aptos","Segoe UI Variable Text","Trebuchet MS",sans-serif;background:radial-gradient(circle at top left,rgba(77,184,255,.2),transparent 24%),radial-gradient(circle at top right,rgba(255,149,82,.16),transparent 20%),linear-gradient(145deg,#04101d,#091729 45%,#06111f);min-height:100vh}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:30px 30px;mask-image:radial-gradient(circle at center,black 32%,transparent 92%)}
+    .progress{position:fixed;top:0;left:0;right:0;height:4px;background:rgba(255,255,255,.05);z-index:40}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--orange),var(--green));box-shadow:0 0 20px rgba(77,184,255,.7)}
+    .toast-wrap{position:fixed;top:20px;right:20px;display:grid;gap:10px;z-index:50;max-width:min(90vw,340px)}.toast{padding:13px 15px;border-radius:16px;border:1px solid var(--line2);background:rgba(5,12,22,.94);box-shadow:var(--shadow);font-size:14px;line-height:1.4}.toast.error{border-color:rgba(255,127,127,.34)}
+    .shell{max-width:1520px;margin:0 auto;padding:32px 24px 64px;position:relative;z-index:1}
+    .shell:before{content:"";position:absolute;inset:18px 24px auto 24px;height:320px;border-radius:36px;background:linear-gradient(135deg,rgba(77,184,255,.08),rgba(255,149,82,.06) 55%,rgba(127,226,162,.05));filter:blur(6px);pointer-events:none}
+    .panel{background:linear-gradient(180deg,rgba(13,24,46,.92),rgba(6,12,24,.94));border:1px solid var(--line);border-radius:30px;backdrop-filter:blur(20px);box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .panel:before{content:"";position:absolute;inset:0 0 auto 0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);pointer-events:none}
+    .topbar,.hero,.metrics,.actions,.tables,.observability,.status-grid,.row,.filters,.detail-grid,.detail-stats{display:grid;gap:14px}.topbar{grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);padding:28px;margin-bottom:28px}.hero{grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);margin-bottom:24px}.metrics{grid-template-columns:repeat(5,minmax(0,1fr));margin-bottom:24px}.actions{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);margin-bottom:24px}.tables{grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);margin-bottom:24px;align-items:start}.observability{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
+    .eyebrow,.label,.meta-title{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}h1,h2,h3,h4{margin:0;font-family:"Bahnschrift","Aptos Display","Segoe UI Variable Display",sans-serif}.brand{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:8px 0 10px}h1{font-size:clamp(36px,5vw,62px);line-height:.95}h2{font-size:clamp(28px,3vw,42px);line-height:1}h3{font-size:22px}.lead,.sub{margin:0;color:#bfd0e6;line-height:1.65;font-size:15px}.sub{font-size:13px;color:var(--muted)}
+    .badge,.pill,.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-size:12px;border:1px solid transparent;background:rgba(255,255,255,.06)}.badge.info{background:rgba(77,184,255,.14);color:#8ad8ff;border-color:rgba(77,184,255,.24)}.good{color:var(--green)!important;border-color:rgba(127,226,162,.22)!important;background:rgba(127,226,162,.08)!important}.warn{color:var(--yellow)!important;border-color:rgba(255,199,106,.24)!important;background:rgba(255,199,106,.08)!important}.bad{color:var(--red)!important;border-color:rgba(255,127,127,.24)!important;background:rgba(255,127,127,.08)!important}
+    .top-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mini,.hero-copy,.hero-meta,.section,.detail-card,.meta-card,.stat-card,.status-card{padding:18px}.mini,.meta-card,.stat-card,.status-card,.detail-card{border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.028));border:1px solid var(--line)}.mini strong,.meta-value,.value{display:block;font-size:22px;margin:8px 0 4px}.hero-copy{padding:34px}.hero-meta{padding:24px;display:grid;gap:12px}
+    .hero-copy:after{content:"";position:absolute;right:-80px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(77,184,255,.18),transparent 70%);pointer-events:none}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.7fr);gap:18px;margin-top:22px}.radar{min-height:250px;border-radius:26px;border:1px solid var(--line);background:radial-gradient(circle at center,rgba(77,184,255,.18),transparent 55%),linear-gradient(180deg,rgba(11,21,37,.98),rgba(6,11,20,.92));position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}.radar:before,.radar:after{content:"";position:absolute;inset:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(77,184,255,.18)}.radar:before{width:78%;height:78%}.radar:after{width:48%;height:48%}.radar .sweep{position:absolute;inset:0;background:conic-gradient(from 0deg,transparent 0deg,rgba(77,184,255,.24) 70deg,transparent 120deg);animation:spin 6s linear infinite}.radar .grid{position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:28px 28px}.node{position:absolute;width:11px;height:11px;border-radius:50%;box-shadow:0 0 18px currentColor;animation:pulse 2.4s ease-in-out infinite}.n1{top:27%;left:24%;color:var(--blue);background:var(--blue)}.n2{top:56%;left:67%;color:var(--orange);background:var(--orange);animation-delay:.4s}.n3{top:68%;left:38%;color:var(--green);background:var(--green);animation-delay:.8s}
+    .section{padding:26px}select,input,textarea,button{width:100%;padding:13px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font:inherit;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease,background .18s ease}button{cursor:pointer;font-weight:600}button:hover{transform:translateY(-1px)}button:focus,input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(77,184,255,.5);box-shadow:0 0 0 3px rgba(77,184,255,.12)}button.primary{background:linear-gradient(135deg,#4db8ff,#277eff);border-color:rgba(77,184,255,.36);color:#fff;box-shadow:0 12px 28px rgba(39,126,255,.24)}button.secondary{background:linear-gradient(135deg,#ff9552,#ff764a);border-color:rgba(255,149,82,.3);color:#111a28;box-shadow:0 12px 28px rgba(255,118,74,.22)}button.ghost{background:rgba(255,255,255,.04)}button.ghost:hover{background:rgba(255,255,255,.08)}textarea{min-height:104px;resize:vertical}select option{color:#091729}
+    .row{grid-template-columns:repeat(4,minmax(0,1fr))}.row.two{grid-template-columns:repeat(2,minmax(0,1fr))}.filters{grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(140px,.4fr));margin-bottom:16px}
+    .timeline-shell,.events-shell,.logs-shell,.detail-shell{max-height:calc(100vh - 250px);overflow:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:rgba(77,184,255,.35) transparent}.timeline-shell{display:grid;gap:14px;scroll-snap-type:y proximity}.incident{padding:18px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,24,43,.94),rgba(8,15,26,.94));cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;scroll-snap-align:start;position:relative}.incident:hover,.incident.active{transform:translateY(-2px);border-color:rgba(77,184,255,.34);box-shadow:0 16px 40px rgba(0,0,0,.26)}.incident:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,transparent,var(--blue),transparent);opacity:0;transition:opacity .18s ease}.incident.active:before{opacity:1}.incident-top,.event-top,.log-top,.detail-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start}.incident-title{font-size:20px;margin-bottom:6px}.incident-bottom{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.incident-mini{padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line)}.muted{color:var(--muted)}
+    .detail-wrap{position:sticky;top:32px}.detail-panel{overflow:hidden}.detail-head{padding:28px 24px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(77,184,255,.06),transparent)}.detail-head h3{font-size:30px;margin-bottom:8px;line-height:1.05}.detail-toolbar,.tabs{display:flex;flex-wrap:wrap;gap:10px;padding:0 24px 16px}.detail-toolbar{border-bottom:1px solid rgba(175,210,255,.08)}.tabs{padding-top:16px}.tab{width:auto;padding:10px 14px;border-radius:999px;font-size:13px}.tab.active{background:linear-gradient(135deg,rgba(77,184,255,.2),rgba(255,149,82,.18));border-color:rgba(77,184,255,.28)}.detail-shell{padding:18px 24px 24px}.detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-card.wide{grid-column:1/-1}.detail-card h4{font-size:16px;margin:0 0 10px}.detail-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:14px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}.stat span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}.stat strong{display:block;font-size:14px;line-height:1.55}
+    .events-shell,.logs-shell{display:grid;gap:12px}.event,.log{padding:16px 18px;border-radius:20px;background:var(--card);border:1px solid var(--line)}.event-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:Consolas,"Cascadia Code",monospace;font-size:12px;line-height:1.7;color:#d7ecff}.json,.markdown{padding:18px;border-radius:20px;background:rgba(3,8,16,.88);border:1px solid var(--line)}.markdown{font-size:13px}.empty{padding:24px;border-radius:22px;border:1px dashed rgba(175,210,255,.18);text-align:center;color:var(--muted);line-height:1.7;background:rgba(255,255,255,.03)}
+    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}@keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.25);opacity:1}}
+    @media (max-width:1280px){.topbar,.hero,.actions,.tables,.observability{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.detail-wrap{position:static}}
+    @media (max-width:980px){.shell{padding:20px 14px 40px}.shell:before{left:14px;right:14px;top:12px}.topbar,.hero-copy,.hero-meta,.section{padding:20px}.top-actions,.status-grid,.metrics,.row,.row.two,.filters,.hero-grid,.detail-grid,.detail-stats,.incident-bottom{grid-template-columns:1fr}.timeline-shell,.events-shell,.logs-shell,.detail-shell{max-height:none}.detail-head{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
+  <div class="progress"><span id="meter"></span></div>
+  <div id="toasts" class="toast-wrap" aria-live="polite"></div>
   <div class="shell">
+    <header class="panel topbar">
+      <div>
+        <div class="eyebrow">Autonomous Incident Command</div>
+        <div class="brand"><h1>Protocol 0</h1><span class="badge info">All incident times shown in IST</span></div>
+        <p class="lead">A rebuilt mission-control frontend with sticky incident intelligence, a smoother live queue, exportable JSON artifacts, and time rendering that stays consistent in India Standard Time.</p>
+      </div>
+      <div class="top-actions">
+        <div class="mini"><div class="label">Mission Clock</div><strong id="clock">Loading...</strong><div class="sub">Asia/Kolkata</div></div>
+        <div class="mini"><div class="label">Auto Sync</div><strong id="sync">8s</strong><div class="sub" id="lastSync">Awaiting first refresh</div></div>
+        <button id="refreshBtn" class="primary">Refresh Mission Control</button>
+        <button id="snapshotBtn" class="ghost">Download Snapshot JSON</button>
+      </div>
+    </header>
+
     <section class="hero">
       <div class="panel hero-copy">
-        <div class="kicker">Autonomous SRE Incident Commander</div>
-        <h1>Protocol Zero</h1>
-        <p class="lead">A durable MVP that detects incidents, runs multi-agent investigation, proposes remediation, prepares code-fix artifacts, and writes post-mortems with a human-review safety layer.</p>
+        <div class="eyebrow">Mission Surface</div>
+        <h2>Incident response that feels alive, not flat.</h2>
+        <p class="lead" style="margin-top:14px">Keep the queue on the left, keep the selected incident pinned on the right, and move through orchestration results, logs, and artifacts without losing context. The dashboard is tuned for quick scanning and deliberate follow-through.</p>
+        <div id="heroBadges" style="display:flex;flex-wrap:wrap;gap:10px;margin:18px 0"></div>
+        <div class="hero-grid">
+          <div class="radar"><div class="grid"></div><div class="sweep"></div><div class="node n1"></div><div class="node n2"></div><div class="node n3"></div></div>
+          <div class="hero-meta">
+            <div class="meta-card"><div class="meta-title">Mission Health</div><div class="meta-value" id="health">Loading...</div><div class="sub" id="healthNote">Checking dependencies.</div></div>
+            <div class="meta-card"><div class="meta-title">Namespace</div><div class="meta-value" id="namespace">default</div><div class="sub">Cluster namespace under watch.</div></div>
+            <div class="meta-card"><div class="meta-title">Queue Focus</div><div class="meta-value" id="queueFocus">0 incidents</div><div class="sub" id="queueFocusNote">Select an incident to inspect its orchestration state.</div></div>
+          </div>
+        </div>
       </div>
       <div class="panel hero-meta">
-        <div class="meta-card">
-          <div class="meta-title">Mode</div>
-          <div class="meta-value" id="mode">Dry Run</div>
-        </div>
-        <div class="meta-card">
-          <div class="meta-title">Database</div>
-          <div class="meta-value" id="db">Loading...</div>
+        <div class="eyebrow">Runtime Status</div>
+        <h3 style="margin:2px 0 6px">Systems Picture</h3>
+        <p class="sub">Fast read on the execution mode and dependency state behind the dashboard.</p>
+        <div class="status-grid" style="margin-top:12px">
+          <div class="status-card"><div class="meta-title">Mode</div><div class="meta-value" id="mode">Loading...</div><div class="sub">Dry run safety state.</div></div>
+          <div class="status-card"><div class="meta-title">Detector</div><div class="meta-value" id="detector">Loading...</div><div class="sub">Background or manual.</div></div>
+          <div class="status-card"><div class="meta-title">Database</div><div class="meta-value" id="db">Loading...</div><div class="sub" id="dbNote">Waiting on storage signal.</div></div>
+          <div class="status-card"><div class="meta-title">Redis</div><div class="meta-value" id="redisStatus">Loading...</div><div class="sub" id="redisNote">Checking stream backend.</div></div>
+          <div class="status-card"><div class="meta-title">Loki</div><div class="meta-value" id="lokiStatus">Loading...</div><div class="sub" id="lokiNote">Checking log availability.</div></div>
+          <div class="status-card"><div class="meta-title">Prometheus</div><div class="meta-value" id="promStatus">Loading...</div><div class="sub" id="promNote">Checking metrics availability.</div></div>
         </div>
       </div>
     </section>
 
-    <section class="grid">
-      <div class="panel stat-card"><div class="label">Active</div><div class="value" id="active">0</div></div>
-      <div class="panel stat-card"><div class="label">Resolved</div><div class="value" id="resolved">0</div></div>
-      <div class="panel stat-card"><div class="label">Total</div><div class="value" id="total">0</div></div>
-      <div class="panel stat-card"><div class="label">Detector</div><div class="value" id="detector">Idle</div></div>
+    <section class="metrics">
+      <div class="panel stat-card"><div class="label">Active</div><div class="value" id="active">0</div><div class="sub">Incidents currently in play.</div></div>
+      <div class="panel stat-card"><div class="label">Resolved</div><div class="value" id="resolved">0</div><div class="sub">Closed or completed flows.</div></div>
+      <div class="panel stat-card"><div class="label">Total</div><div class="value" id="total">0</div><div class="sub">Stored incidents in the repo.</div></div>
+      <div class="panel stat-card"><div class="label">Needs Review</div><div class="value" id="reviewCount">0</div><div class="sub">Incidents waiting on a human.</div></div>
+      <div class="panel stat-card"><div class="label">Critical Open</div><div class="value" id="criticalCount">0</div><div class="sub">Critical incidents not resolved.</div></div>
     </section>
 
     <section class="actions">
       <div class="panel section">
-        <h2>Trigger Manual Incident</h2>
+        <div class="eyebrow">Manual Control</div>
+        <h3 style="margin:8px 0 6px">Trigger Incident</h3>
+        <p class="sub" style="margin-bottom:16px">Inject a scenario directly into the orchestration pipeline, with optional operator context carried into the incident JSON.</p>
         <div class="row">
-          <select id="service">
-            <option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option>
-          </select>
-          <select id="incidentType">
-            <option value="pod_restart_loop">pod_restart_loop</option>
-            <option value="cpu_spike">cpu_spike</option>
-            <option value="memory_spike">memory_spike</option>
-            <option value="deployment_unavailable">deployment_unavailable</option>
-          </select>
-          <select id="severity">
-            <option>critical</option><option>high</option><option>medium</option>
-          </select>
-          <button onclick="triggerIncident()">Trigger and Process</button>
+          <select id="service"><option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option></select>
+          <select id="incidentType"><option value="pod_restart_loop">pod_restart_loop</option><option value="cpu_spike">cpu_spike</option><option value="memory_spike">memory_spike</option><option value="deployment_unavailable">deployment_unavailable</option></select>
+          <select id="severity"><option>critical</option><option>high</option><option>medium</option></select>
+          <button id="triggerBtn" class="secondary">Trigger and Process</button>
+        </div>
+        <div class="row two" style="margin-top:12px">
+          <textarea id="errorMessage" placeholder="Optional operator note or error context..."></textarea>
+          <div class="status-card"><div class="meta-title">Operator Note</div><div class="meta-value" style="font-size:18px">Context travels with the incident</div><div class="sub">Use this field for endpoint failures, rollout suspicion, or anything the agents should read immediately.</div></div>
         </div>
       </div>
       <div class="panel section">
-        <h2>Detection Controls</h2>
-        <div class="row">
-          <button class="secondary" onclick="runDetector(true)">Run Detector</button>
-          <button class="secondary" onclick="refreshAll()">Refresh</button>
+        <div class="eyebrow">Fast Actions</div>
+        <h3 style="margin:8px 0 6px">Control Stack</h3>
+        <p class="sub" style="margin-bottom:16px">Refresh, rerun, and export without leaving the selected incident.</p>
+        <div class="row two">
+          <button id="detectorBtn" class="primary">Run Detector</button>
+          <button id="reprocessBtn" class="ghost">Reprocess Selected</button>
         </div>
+        <div class="row two" style="margin-top:12px">
+          <button id="downloadIncidentBtn" class="ghost">Download Selected JSON</button>
+          <button id="downloadPostmortemBtn" class="ghost">Download Post-Mortem</button>
+        </div>
+        <div id="controlBadges" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px"></div>
       </div>
     </section>
 
     <section class="tables">
       <div class="panel section">
-        <h2>Incident Timeline</h2>
-        <table>
-          <thead>
-            <tr><th>ID</th><th>Service</th><th>Type</th><th>Status</th><th>Updated</th></tr>
-          </thead>
-          <tbody id="incidentRows"></tbody>
-        </table>
+        <div class="eyebrow">Live Queue</div>
+        <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin:8px 0 16px">
+          <div><h3>Incident Timeline</h3><p class="sub" style="margin-top:6px">Scrollable cards with IST timestamps, filter controls, and fast incident switching.</p></div>
+          <div class="sub" id="countNote">0 incidents loaded</div>
+        </div>
+        <div class="filters">
+          <input id="incidentSearch" type="search" placeholder="Search incident ID, service, type, status, or summary..." />
+          <select id="statusFilter"><option value="">All statuses</option><option value="active">active</option><option value="investigating">investigating</option><option value="simulated">simulated</option><option value="needs_review">needs_review</option><option value="resolved">resolved</option><option value="closed">closed</option></select>
+          <select id="severityFilter"><option value="">All severities</option><option value="critical">critical</option><option value="high">high</option><option value="medium">medium</option></select>
+        </div>
+        <div id="incidentRows" class="timeline-shell"><div class="empty">Loading incidents...</div></div>
+      </div>
+      <div class="detail-wrap">
+        <div id="detailPanel" class="panel detail-panel">
+          <div class="detail-head"><div><div class="eyebrow">Incident Intelligence</div><h3>No Incident Selected</h3><p class="sub">Select an incident to inspect the orchestration state, raw JSON, and post-mortem artifacts.</p></div></div>
+          <div class="detail-shell"><div class="empty">The detail deck stays pinned while you scroll the live queue, making side-by-side triage much easier.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="observability">
+      <div class="panel section">
+        <div class="eyebrow">Runtime Feed</div>
+        <h3 style="margin:8px 0 6px">Activity Stream</h3>
+        <p class="sub" style="margin-bottom:16px">Recent orchestration events, detector cycles, and operator-triggered actions.</p>
+        <div id="eventStream" class="events-shell"><div class="empty">Loading activity stream...</div></div>
       </div>
       <div class="panel section">
-        <h2>Incident Detail</h2>
-        <div class="detail-card"><pre id="detail">Select an incident to inspect its orchestration state.</pre></div>
+        <div class="eyebrow">Observability</div>
+        <h3 style="margin:8px 0 6px">Live Loki Logs</h3>
+        <p class="sub" style="margin-bottom:16px">Recent log lines rendered in IST so incident time and log time read from the same clock.</p>
+        <div class="row" style="grid-template-columns:minmax(0,1fr) 120px auto">
+          <select id="logService"><option value="">all services</option><option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option></select>
+          <input id="logWindow" type="number" min="1" max="120" value="15" />
+          <button id="loadLogsBtn" class="primary">Load Logs</button>
+        </div>
+        <p class="sub" id="logsMeta" style="margin:12px 0 14px">Logs will appear here after the first query.</p>
+        <div id="logs" class="logs-shell"><div class="empty">No logs loaded yet.</div></div>
       </div>
     </section>
   </div>
 
   <script>
-    async function fetchJSON(url, options) {
-      const response = await fetch(url, options);
-      if (!response.ok) throw new Error(await response.text());
-      return response.json();
-    }
-
-    async function refreshStats() {
-      const stats = await fetchJSON('/api/stats');
-      document.getElementById('active').textContent = stats.active || 0;
-      document.getElementById('resolved').textContent = stats.resolved || 0;
-      document.getElementById('total').textContent = stats.total_incidents || 0;
-      document.getElementById('mode').textContent = stats.dry_run_mode ? 'Dry Run' : 'Live';
-      document.getElementById('db').textContent = stats.database_url || 'n/a';
-      document.getElementById('detector').textContent = stats.background_detector ? 'Background' : 'Manual';
-    }
-
-    async function refreshIncidents() {
-      const payload = await fetchJSON('/api/incidents');
-      const tbody = document.getElementById('incidentRows');
-      tbody.innerHTML = '';
-      for (const incident of payload.incidents || []) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td><button onclick="loadIncident('${incident.incident_id}')">${incident.incident_id}</button></td>
-          <td>${incident.service_affected || incident.payload?.service_affected || 'unknown'}</td>
-          <td>${incident.incident_type || incident.payload?.type || 'unknown'}</td>
-          <td><span class="pill ${badgeClass(incident.status)}">${incident.status}</span></td>
-          <td>${incident.updated_at || ''}</td>
-        `;
-        tbody.appendChild(row);
-      }
-    }
-
-    function badgeClass(status) {
-      if (['resolved'].includes(status)) return 'good';
-      if (['simulated','needs_review','suggested'].includes(status)) return 'warn';
-      return 'bad';
-    }
-
-    async function loadIncident(id) {
-      const incident = await fetchJSON(`/api/incidents/${id}`);
-      document.getElementById('detail').textContent = JSON.stringify(incident, null, 2);
-    }
-
-    async function triggerIncident() {
-      const body = {
-        service: document.getElementById('service').value,
-        incident_type: document.getElementById('incidentType').value,
-        severity: document.getElementById('severity').value,
-      };
-      const incident = await fetchJSON('/api/incidents/trigger', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      document.getElementById('detail').textContent = JSON.stringify(incident, null, 2);
-      await refreshAll();
-    }
-
-    async function runDetector(autoProcess) {
-      const payload = await fetchJSON(`/api/incidents/detect?auto_process=${autoProcess}`, { method: 'POST' });
-      document.getElementById('detail').textContent = JSON.stringify(payload, null, 2);
-      await refreshAll();
-    }
-
-    async function refreshAll() {
-      await Promise.all([refreshStats(), refreshIncidents()]);
-    }
-
-    refreshAll();
-    setInterval(refreshAll, 8000);
+    const ZONE='Asia/Kolkata',AUTO=8000;
+    const F_CLOCK=new Intl.DateTimeFormat('en-IN',{timeZone:ZONE,weekday:'short',day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+    const F_LONG=new Intl.DateTimeFormat('en-IN',{timeZone:ZONE,dateStyle:'medium',timeStyle:'medium'});
+    const F_SHORT=new Intl.DateTimeFormat('en-IN',{timeZone:ZONE,day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',hour12:true});
+    const F_REL=new Intl.RelativeTimeFormat('en',{numeric:'auto'});
+    const state={stats:null,health:null,incidents:[],events:[],logs:null,selectedId:null,selected:null,postmortem:null,tab:'overview',lastRefresh:null,next:Date.now()+AUTO,timer:null};
+    const q=id=>document.getElementById(id);
+    const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
+    const human=v=>v==null||v===''?'n/a':String(v).replaceAll('_',' ');
+    const tone=v=>['resolved','closed','healthy','live','background'].includes(String(v).toLowerCase())?'good':['simulated','needs review','needs_review','fallback','manual','dry run','degraded','suggested'].includes(String(v).toLowerCase())?'warn':'bad';
+    const sev=v=>String(v).toLowerCase()==='critical'?'bad':String(v).toLowerCase()==='high'?'warn':'good';
+    function note(msg,error=false){const n=document.createElement('div');n.className=`toast${error?' error':''}`;n.textContent=msg;q('toasts').appendChild(n);setTimeout(()=>{n.style.opacity='0';n.style.transform='translateY(-6px)'},2600);setTimeout(()=>n.remove(),3000)}
+    function parseDate(v){if(v==null||v==='')return null;if(v instanceof Date)return isNaN(v.getTime())?null:v;const s=String(v).trim();if(/^\d{16,}$/.test(s))return new Date(Number(s.slice(0,13)));if(/^\d{13}$/.test(s))return new Date(Number(s));if(/^\d{10}$/.test(s))return new Date(Number(s)*1000);let n=s.replace(' ','T');if(!/[zZ]$|[+\-]\d{2}:\d{2}$/.test(n))n+='Z';const d=new Date(n);return isNaN(d.getTime())?null:d}
+    const fmt=v=>{const d=parseDate(v);return d?F_LONG.format(d):'n/a'};const fmtS=v=>{const d=parseDate(v);return d?F_SHORT.format(d):'n/a'};
+    function rel(v){const d=parseDate(v);if(!d)return'n/a';const ms=d.getTime()-Date.now(),abs=Math.abs(ms),u=[['day',86400000],['hour',3600000],['minute',60000],['second',1000]];for(const[a,b]of u)if(abs>=b||a==='second')return F_REL.format(Math.round(ms/b),a);return'just now'}
+    function dur(a,b){const s=parseDate(a),e=parseDate(b)||new Date();if(!s||!e)return'n/a';let t=Math.max(0,Math.round((e-s)/1000)),h=Math.floor(t/3600);t-=h*3600;const m=Math.floor(t/60),sec=t-m*60,p=[];if(h)p.push(`${h}h`);if(m)p.push(`${m}m`);if(!h&&!m)p.push(`${sec}s`);return p.join(' ')}
+    async function get(url,opt){const r=await fetch(url,opt);if(!r.ok)throw new Error(await r.text());return r.json()}
+    function set(id,v){q(id).textContent=v}
+    function clock(){set('clock',F_CLOCK.format(new Date()));const s=Math.max(0,Math.ceil((state.next-Date.now())/1000));set('sync',`${s}s`);set('lastSync',state.lastRefresh?`Last sync ${rel(state.lastRefresh)}`:'Awaiting first refresh')}
+    function scrollMeter(){const top=window.scrollY,max=document.documentElement.scrollHeight-window.innerHeight,p=max>0?Math.min(100,Math.max(0,top/max*100)):0;q('meter').style.width=`${p}%`}
+    function schedule(){clearTimeout(state.timer);state.next=Date.now()+AUTO;state.timer=setTimeout(()=>refreshAll({keep:true,silent:true}),AUTO);clock()}
+    function save(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
+    function tag(label,kind=''){return `<span class="chip ${kind}">${esc(label)}</span>`}
+    function renderHero(){const inc=state.incidents||[];const critical=inc.filter(i=>String(i.severity).toLowerCase()==='critical'&&!['resolved','closed'].includes(String(i.status).toLowerCase())).length;const review=inc.filter(i=>String(i.status).toLowerCase()==='needs_review').length;q('heroBadges').innerHTML=[tag(`Health ${human(state.health?.status||'unknown')}`,tone(state.health?.status||'unknown')),tag(`Critical open ${critical}`,critical?'bad':'good'),tag(`Needs review ${review}`,review?'warn':'good'),tag('Timezone IST','good')].join('');set('health',human(state.health?.status||'unknown'));set('healthNote',state.health?.status==='healthy'?'All configured dependencies are responding.':'One or more dependencies needs attention.');set('namespace',state.health?.namespace||'default');set('queueFocus',`${inc.length} incident${inc.length===1?'':'s'}`);set('queueFocusNote',state.selected?`Focused on ${state.selected.service_affected||state.selected.payload?.service_affected||'unknown'}.`:'Select an incident to inspect its orchestration state.')}
+    function renderRuntime(){const s=state.stats||{},redis=s.redis||{},loki=s.loki||{},prom=s.prometheus||{};set('mode',s.dry_run_mode?'Dry Run':'Live');set('detector',s.background_detector?'Background':'Manual');set('db',s.database_url?'Connected':'n/a');set('dbNote',s.database_url||'No database URL reported.');set('redisStatus',redis.backend==='redis'?'Live':'Fallback');set('redisNote',redis.available?'Redis-backed stream is active.':'Using in-memory activity fallback.');set('lokiStatus',loki.available?'Live':'Unavailable');set('lokiNote',loki.available?'Live log queries are enabled.':'Loki is not reachable right now.');set('promStatus',prom.available?'Live':(prom.configured?'Unavailable':'Inactive'));set('promNote',prom.available?'Metrics are available.':'Collector is not returning live metrics.');renderHero()}
+    function renderStats(){const s=state.stats||{},inc=state.incidents||[],review=inc.filter(i=>String(i.status).toLowerCase()==='needs_review').length,critical=inc.filter(i=>String(i.severity).toLowerCase()==='critical'&&!['resolved','closed'].includes(String(i.status).toLowerCase())).length;set('active',String(s.active||0));set('resolved',String(s.resolved||0));set('total',String(s.total_incidents||0));set('reviewCount',String(review));set('criticalCount',String(critical));q('controlBadges').innerHTML=[tag(`Mode ${s.dry_run_mode?'Dry Run':'Live'}`,tone(s.dry_run_mode?'Dry Run':'Live')),tag(`Detector ${s.background_detector?'Background':'Manual'}`,tone(s.background_detector?'Background':'Manual')),tag(`Queue ${(state.incidents||[]).length} loaded`,'good')].join('')}
+    function renderIncidents(){const search=q('incidentSearch').value.trim().toLowerCase(),status=q('statusFilter').value,severity=q('severityFilter').value;const filtered=(state.incidents||[]).filter(i=>{const hay=[i.incident_id,i.service_affected,i.incident_type,i.status,i.summary,i.payload?.error_message].join(' ').toLowerCase();return(!status||String(i.status).toLowerCase()===status)&&(!severity||String(i.severity).toLowerCase()===severity)&&(!search||hay.includes(search))});set('countNote',`${filtered.length} of ${state.incidents.length} incidents shown`);q('incidentRows').innerHTML=filtered.length?filtered.map(i=>{const s=i.service_affected||i.payload?.service_affected||'unknown',t=i.incident_type||i.payload?.type||'unknown',sum=i.summary||i.state?.summary||i.payload?.error_message||'No summary available yet.',det=i.payload?.detected_at||i.created_at;return `<article class="incident ${state.selectedId===i.incident_id?'active':''}" data-id="${esc(i.incident_id)}"><div class="incident-top"><div><div class="incident-title">${esc(s)}</div><div class="sub">${esc(human(t))} · ${esc(i.incident_id)}</div></div><div style="display:flex;flex-wrap:wrap;gap:8px"><span class="pill ${tone(i.status)}">${esc(human(i.status||'unknown'))}</span><span class="pill ${sev(i.severity)}">${esc(String(i.severity||'unknown').toUpperCase())}</span></div></div><div class="sub" style="line-height:1.6">${esc(sum)}</div><div class="incident-bottom"><div class="incident-mini"><div class="label">Detected</div><div>${esc(fmtS(det))}<br><span class="muted">${esc(rel(det))}</span></div></div><div class="incident-mini"><div class="label">Cycle Duration</div><div>${esc(i.state?.started_at?dur(i.state.started_at,i.state.completed_at||i.updated_at):dur(i.created_at,i.updated_at))}<br><span class="muted">${esc(fmtS(i.updated_at))}</span></div></div></div></article>`}).join(''):'<div class="empty">No incidents match the current filters.</div>'}
+    function renderEvents(){const events=state.events||[];q('eventStream').innerHTML=events.length?events.map(e=>{const pills=Object.entries(e.details||{}).slice(0,4).map(([k,v])=>`<span class="pill">${esc(human(k))}: ${esc(typeof v==='object'?JSON.stringify(v):v)}</span>`).join('');return `<article class="event"><div class="event-top"><div><div>${esc(e.message||'Protocol Zero event')}</div><div class="sub">${esc(human(e.type||'event'))}</div></div><div class="sub" style="text-align:right">${esc(fmtS(e.timestamp))}<br>${esc(rel(e.timestamp))}</div></div>${pills?`<div class="event-pills">${pills}</div>`:''}</article>`}).join(''):'<div class="empty">No activity has been recorded yet.</div>'}
+    function renderLogs(payload){if(!payload){q('logs').innerHTML='<div class="empty">No logs loaded yet.</div>';set('logsMeta','Logs will appear here after the first query.');return}if(!payload.available){q('logs').innerHTML=`<div class="empty">${esc(payload.error||'Loki is unavailable for log queries right now.')}</div>`;set('logsMeta',`Query ${payload.query||'n/a'} is currently unavailable.`);return}const logs=payload.logs||[];set('logsMeta',`Showing ${logs.length} line${logs.length===1?'':'s'} from ${payload.query||'current query'} in IST.`);q('logs').innerHTML=logs.length?logs.map(l=>`<article class="log"><div class="log-top"><div><div>${esc(l.labels?.app||l.labels?.container||'unknown')}</div><div class="sub">${esc(l.labels?.namespace||'namespace unknown')}</div></div><div class="sub" style="text-align:right">${esc(fmtS(l.timestamp_ns))}<br>${esc(rel(l.timestamp_ns))}</div></div><pre>${esc(l.line||'')}</pre></article>`).join(''):'<div class="empty">No log lines returned for this window.</div>'}
+    function detailContent(){const i=state.selected;if(!i)return '<div class="empty">Select an incident from the timeline to inspect its orchestration state.</div>';if(state.tab==='json')return `<div class="detail-card"><h4>Downloadable Incident JSON</h4><p class="sub" style="margin-bottom:12px">You can export this incident directly from the control stack or this panel.</p><pre class="json">${esc(JSON.stringify(i,null,2))}</pre></div>`;if(state.tab==='postmortem'){if(state.postmortem==='loading')return '<div class="detail-card"><h4>Post-Mortem</h4><p class="sub">Loading post-mortem artifact...</p></div>';if(!state.postmortem?.content)return `<div class="detail-card"><h4>Post-Mortem</h4><p class="sub" style="margin-bottom:12px">No post-mortem content is available yet for this incident.</p><div class="detail-stats"><div class="stat"><span>Artifact Path</span><strong>${esc(state.postmortem?.path||i.postmortem_path||'Not generated')}</strong></div><div class="stat"><span>Status</span><strong>${esc(i.state?.postmortem?.status||'missing')}</strong></div></div></div>`;return `<div class="detail-card"><h4>Post-Mortem Artifact</h4><pre class="markdown">${esc(state.postmortem.content)}</pre></div>`}const p=i.payload||{},st=i.state||{},ver=st.verification||{},rem=st.remediation||{},hyp=st.selected_hypothesis||{},find=st.investigation_findings||[],audit=st.audit_log||[],code=st.code_fix||{},evidenceCount=(ver.evidence_count ?? (Object.keys(hyp.evidence||{}).length || 0));return `<div class="detail-grid"><div class="detail-card"><h4>Timeline</h4><ol style="margin:0;padding-left:18px;color:#c0d4ed;font-size:14px;line-height:1.7"><li>Detected: ${esc(fmt(p.detected_at||i.created_at))}</li><li>Created: ${esc(fmt(i.created_at))}</li><li>Updated: ${esc(fmt(i.updated_at))}</li><li>Completed: ${esc(fmt(st.completed_at||i.updated_at))}</li></ol></div><div class="detail-card"><h4>Verification</h4><div class="detail-stats"><div class="stat"><span>Status</span><strong>${esc(human(ver.status||'unknown'))}</strong></div><div class="stat"><span>Confidence</span><strong>${esc(String(ver.confidence??hyp.confidence??'n/a'))}</strong></div><div class="stat"><span>Auto Remediate</span><strong>${esc(ver.can_auto_remediate?'Yes':'No')}</strong></div><div class="stat"><span>Evidence Count</span><strong>${esc(String(evidenceCount))}</strong></div></div><p class="sub" style="margin-top:12px">${esc(ver.reasoning_summary||'Verification reasoning not available.')}</p></div><div class="detail-card wide"><h4>Selected Hypothesis</h4><p class="sub" style="margin-bottom:12px">${esc(hyp.summary||hyp.root_cause||'No correlated hypothesis was recorded.')}</p><div class="detail-stats"><div class="stat"><span>Root Cause</span><strong>${esc(hyp.root_cause||'Unknown')}</strong></div><div class="stat"><span>Supporting Agents</span><strong>${esc((hyp.supporting_agents||[]).join(', ')||'None')}</strong></div><div class="stat" style="grid-column:1/-1"><span>Recommended Action</span><strong>${esc(hyp.recommended_action||'No recommended action recorded.')}</strong></div></div></div><div class="detail-card wide"><h4>Remediation and Artifacts</h4><p class="sub" style="margin-bottom:12px">${esc(rem.summary||'No remediation summary available.')}</p><div class="detail-stats"><div class="stat"><span>Remediation Status</span><strong>${esc(human(rem.status||'unknown'))}</strong></div><div class="stat"><span>Code Fix Status</span><strong>${esc(human(code.status||'unknown'))}</strong></div><div class="stat"><span>Branch</span><strong>${esc(code.branch_name||'Not generated')}</strong></div><div class="stat"><span>Post-Mortem Path</span><strong>${esc(st.postmortem?.path||i.postmortem_path||'Not generated')}</strong></div></div>${(rem.actions||[]).length?`<ol style="margin:12px 0 0;padding-left:18px;color:#c0d4ed;font-size:14px;line-height:1.7">${rem.actions.map(a=>`<li>${esc(a.description||a.kind||'action')} · ${esc(a.command||a.target||'n/a')}</li>`).join('')}</ol>`:''}</div><div class="detail-card wide"><h4>Agent Findings</h4><div class="detail-stats">${find.length?find.map(f=>`<div class="stat"><span>${esc(f.agent_name||'Agent')}</span><strong>${esc(f.summary||'No summary available.')}</strong><div class="sub" style="margin-top:8px">Confidence ${esc(String(f.confidence??'n/a'))}</div></div>`).join(''):'<div class="stat"><span>Agents</span><strong>No findings were recorded.</strong></div>'}</div></div><div class="detail-card wide"><h4>Audit Trail</h4><ol style="margin:0;padding-left:18px;color:#c0d4ed;font-size:14px;line-height:1.7">${audit.length?audit.map(a=>`<li>${esc(a)}</li>`).join(''):'<li>No audit log entries recorded.</li>'}</ol></div></div>`}
+    function renderDetail(){if(!state.selected){q('detailPanel').innerHTML=`<div class="detail-head"><div><div class="eyebrow">Incident Intelligence</div><h3>No Incident Selected</h3><p class="sub">Select an incident to inspect the orchestration state, raw JSON, and post-mortem artifacts.</p></div></div><div class="detail-shell"><div class="empty">The detail deck stays pinned while you scroll the live queue, making side-by-side triage much easier.</div></div>`;return}const i=state.selected,p=i.payload||{},s=i.service_affected||p.service_affected||'unknown',t=i.incident_type||p.type||'unknown',sum=i.summary||i.state?.summary||p.error_message||'No summary available yet.';q('detailPanel').innerHTML=`<div class="detail-head"><div><div class="eyebrow">Incident Intelligence</div><h3>${esc(s)} · ${esc(human(t))}</h3><p class="sub">${esc(sum)}</p></div><div style="display:flex;flex-wrap:wrap;gap:8px"><span class="pill ${tone(i.status)}">${esc(human(i.status||'unknown'))}</span><span class="pill ${sev(i.severity)}">${esc(String(i.severity||'unknown').toUpperCase())}</span><span class="pill">${esc(i.incident_id)}</span></div></div><div class="detail-toolbar"><span class="pill"><strong>Detected</strong> ${esc(fmtS(p.detected_at||i.created_at))}</span><span class="pill"><strong>Updated</strong> ${esc(fmtS(i.updated_at))}</span><span class="pill"><strong>Duration</strong> ${esc(i.state?.started_at?dur(i.state.started_at,i.state.completed_at||i.updated_at):dur(i.created_at,i.updated_at))}</span><span class="pill"><strong>Source</strong> ${esc(p.source||i.source||'unknown')}</span></div><div class="tabs"><button class="tab ${state.tab==='overview'?'active':''}" data-tab="overview">Overview</button><button class="tab ${state.tab==='json'?'active':''}" data-tab="json">Raw JSON</button><button class="tab ${state.tab==='postmortem'?'active':''}" data-tab="postmortem">Post-Mortem</button></div><div class="detail-shell">${detailContent()}</div>`}
+    async function refreshData(){state.health=await get('/health');state.stats=await get('/api/stats');state.incidents=(await get('/api/incidents')).incidents||[];state.events=(await get('/api/events?limit=10')).events||[]}
+    async function loadLogs(){const service=q('logService').value,since=q('logWindow').value||15,params=new URLSearchParams({limit:'40',since_minutes:String(since)});if(service)params.set('service',service);try{state.logs=await get(`/api/logs?${params.toString()}`);renderLogs(state.logs);if(state.logs.available)note(`Loaded ${state.logs.logs?.length||0} log lines.`)}catch(e){renderLogs({available:false,query:params.toString(),error:e.message});note(`Log query failed: ${e.message}`,true)}}
+    async function loadPostmortem(id,quiet=false){state.postmortem='loading';renderDetail();try{state.postmortem=await get(`/api/postmortems/${encodeURIComponent(id)}`)}catch(e){state.postmortem={path:null,content:null,error:e.message};if(!quiet)note(`Post-mortem unavailable: ${e.message}`,true)}renderDetail()}
+    async function loadIncident(id,{keepTab=true,quiet=false}={}){if(!keepTab)state.tab='overview';state.selectedId=id;state.postmortem=null;try{state.selected=await get(`/api/incidents/${encodeURIComponent(id)}`);renderRuntime();renderIncidents();renderDetail();if(state.tab==='postmortem'||state.selected.postmortem_path||state.selected.state?.postmortem?.path)void loadPostmortem(id,true);if(!quiet)note(`Loaded ${id}.`)}catch(e){note(`Unable to load incident: ${e.message}`,true)}}
+    async function refreshAll({keep=true,silent=false}={}){try{await refreshData()}catch(e){if(!silent)note(`Refresh hit an issue: ${e.message}`,true)}renderRuntime();renderStats();renderIncidents();renderEvents();const ids=new Set((state.incidents||[]).map(i=>i.incident_id));if(keep&&state.selectedId&&ids.has(state.selectedId))await loadIncident(state.selectedId,{keepTab:true,quiet:true});else if(state.incidents.length)await loadIncident(state.incidents[0].incident_id,{keepTab:false,quiet:true});else{state.selectedId=null;state.selected=null;state.postmortem=null;renderDetail()}state.lastRefresh=new Date();clock();schedule();if(!silent)note('Mission control refreshed.')}
+    async function triggerIncident(){const body={service:q('service').value,incident_type:q('incidentType').value,severity:q('severity').value},msg=q('errorMessage').value.trim();if(msg)body.error_message=msg;try{const incident=await get('/api/incidents/trigger',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});q('errorMessage').value='';state.selectedId=incident.incident_id;await refreshAll({keep:true,silent:true});await loadIncident(incident.incident_id,{keepTab:false,quiet:true});note(`Triggered ${incident.incident_id}.`)}catch(e){note(`Trigger failed: ${e.message}`,true)}}
+    async function runDetector(){try{const p=await get('/api/incidents/detect?auto_process=true',{method:'POST'});await refreshAll({keep:true,silent:true});note(`Detector run completed. Processed ${p.processed||0} incidents.`)}catch(e){note(`Detector run failed: ${e.message}`,true)}}
+    async function reprocess(){if(!state.selectedId){note('Select an incident before reprocessing.',true);return}try{await get(`/api/incidents/${encodeURIComponent(state.selectedId)}/reprocess`,{method:'POST'});await refreshAll({keep:true,silent:true});await loadIncident(state.selectedId,{keepTab:false,quiet:true});note(`Reprocessed ${state.selectedId}.`)}catch(e){note(`Reprocess failed: ${e.message}`,true)}}
+    function downloadIncident(){if(!state.selected){note('Select an incident before downloading JSON.',true);return}save(`${state.selected.incident_id}.json`,JSON.stringify(state.selected,null,2),'application/json');note(`Downloaded ${state.selected.incident_id}.json`)}
+    async function downloadPostmortem(){if(!state.selectedId){note('Select an incident before downloading its post-mortem.',true);return}if(!state.postmortem||state.postmortem==='loading')await loadPostmortem(state.selectedId,true);if(!state.postmortem?.content){note('No post-mortem content is available for this incident yet.',true);return}save(`${state.selectedId}-postmortem.md`,state.postmortem.content,'text/markdown');note(`Downloaded ${state.selectedId} post-mortem.`)}
+    function downloadSnapshot(){save(`protocol-0-snapshot-${new Date().toISOString().replaceAll(':','-').replaceAll('.','-')}.json`,JSON.stringify({generated_at_utc:new Date().toISOString(),rendered_timezone:ZONE,health:state.health,stats:state.stats,incidents:state.incidents,selected_incident:state.selected,events:state.events,logs:state.logs},null,2),'application/json');note('Downloaded dashboard snapshot JSON.')}
+    function wire(){q('refreshBtn').addEventListener('click',()=>refreshAll({keep:true}));q('snapshotBtn').addEventListener('click',downloadSnapshot);q('triggerBtn').addEventListener('click',triggerIncident);q('detectorBtn').addEventListener('click',runDetector);q('reprocessBtn').addEventListener('click',reprocess);q('downloadIncidentBtn').addEventListener('click',downloadIncident);q('downloadPostmortemBtn').addEventListener('click',downloadPostmortem);q('loadLogsBtn').addEventListener('click',loadLogs);q('incidentRows').addEventListener('click',e=>{const card=e.target.closest('[data-id]');if(card)loadIncident(card.getAttribute('data-id'),{keepTab:false})});q('detailPanel').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;state.tab=b.getAttribute('data-tab');renderDetail();if(state.tab==='postmortem'&&state.selectedId)void loadPostmortem(state.selectedId,true)});['incidentSearch','statusFilter','severityFilter'].forEach(id=>{q(id).addEventListener('input',renderIncidents);q(id).addEventListener('change',renderIncidents)});window.addEventListener('scroll',scrollMeter,{passive:true})}
+    async function init(){wire();clock();scrollMeter();renderLogs(null);setInterval(clock,1000);await refreshAll({keep:true,silent:true});await loadLogs()}
+    init();
   </script>
 </body>
 </html>

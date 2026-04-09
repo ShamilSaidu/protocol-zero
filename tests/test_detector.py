@@ -63,3 +63,27 @@ def test_detector_skips_metrics_below_threshold() -> None:
     detector = IncidentDetector(collector=StubCollector(snapshot))
 
     assert detector.collect_and_detect() == []
+
+
+def test_detector_ignores_infra_services_by_default() -> None:
+    snapshot = MetricsSnapshot(
+        pod_restarts={
+            "loki-0": 5,
+            "cartservice-546c548494-795fd": 5,
+        },
+        cpu_usage_pct={},
+        memory_usage_mb={},
+        unavailable_replicas={"prometheus-grafana": 1, "paymentservice": 1},
+    )
+    detector = IncidentDetector(
+        collector=StubCollector(snapshot),
+        thresholds=DetectionThresholds(
+            pod_restart_threshold=3,
+            deployment_unavailable_threshold=1,
+        ),
+    )
+
+    incidents = detector.collect_and_detect()
+
+    assert len(incidents) == 2
+    assert {incident["service_affected"] for incident in incidents} == {"cartservice", "paymentservice"}

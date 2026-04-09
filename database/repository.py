@@ -43,6 +43,8 @@ class IncidentRecord(Base):
 class IncidentRepository:
     """Stores and retrieves Protocol Zero incident lifecycle state."""
 
+    TERMINAL_STATUSES = {"resolved", "closed"}
+
     def __init__(self, database_url: str | None = None) -> None:
         configured = database_url or os.getenv("DATABASE_URL", "")
         fallback_path = Path("protocol_zero.db").resolve()
@@ -130,9 +132,9 @@ class IncidentRepository:
                 .limit(5)
             )
             for record in records:
-                created_at = record.created_at
-                created_ts = created_at.timestamp() if hasattr(created_at, "timestamp") else 0
-                if created_ts >= cutoff and record.status in {"active", "investigating", "remediating"}:
+                created_ts = self._timestamp(record.created_at)
+                status = (record.status or "").lower()
+                if created_ts >= cutoff and status not in self.TERMINAL_STATUSES:
                     return self._to_dict(record)
             return None
 
@@ -175,3 +177,20 @@ class IncidentRepository:
             "created_at": record.created_at.isoformat() if hasattr(record.created_at, "isoformat") else str(record.created_at),
             "updated_at": record.updated_at.isoformat() if hasattr(record.updated_at, "isoformat") else str(record.updated_at),
         }
+
+    @staticmethod
+    def _timestamp(value: Any) -> float:
+        if hasattr(value, "timestamp"):
+            tzinfo = getattr(value, "tzinfo", None)
+            if tzinfo is None:
+                value = value.replace(tzinfo=timezone.utc)
+            return value.timestamp()
+        if isinstance(value, str):
+            try:
+                parsed = datetime.fromisoformat(value)
+                if parsed.tzinfo is None:
+                    parsed = parsed.replace(tzinfo=timezone.utc)
+                return parsed.timestamp()
+            except ValueError:
+                return 0
+        return 0

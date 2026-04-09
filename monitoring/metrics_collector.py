@@ -27,6 +27,20 @@ class MetricsCollector:
             unavailable_replicas=self._fetch_unavailable_replicas(),
         )
 
+    def status(self) -> dict[str, Any]:
+        return {
+            "configured": bool(self.prometheus_url),
+            "available": self.available(),
+            "base_url": self.prometheus_url,
+        }
+
+    def available(self) -> bool:
+        try:
+            result = self.client.custom_query(query="up")
+            return isinstance(result, list)
+        except Exception:
+            return False
+
     def _run_query(self, query: str) -> list[dict[str, Any]]:
         result = self.client.custom_query(query=query)
         return result if isinstance(result, list) else []
@@ -47,8 +61,8 @@ class MetricsCollector:
 
     def _fetch_pod_restarts(self) -> dict[str, float]:
         query = (
-            "sum by (pod) (kube_pod_container_status_restarts_total"
-            f"{{namespace=\"{self.namespace}\"}})"
+            "sum by (pod) (increase(kube_pod_container_status_restarts_total"
+            f"{{namespace=\"{self.namespace}\"}}[10m]))"
         )
         return self._vector_to_map(self._run_query(query), label="pod")
 

@@ -51,6 +51,16 @@ def stats() -> dict:
     return RUNTIME.stats()
 
 
+@app.get("/api/events")
+def list_events(limit: int = 25) -> dict:
+    return {"events": RUNTIME.list_events(limit=limit)}
+
+
+@app.get("/api/logs")
+def get_logs(service: str | None = None, limit: int = 50, since_minutes: int = 15) -> dict:
+    return RUNTIME.query_logs(service=service, limit=limit, since_minutes=since_minutes)
+
+
 @app.get("/api/incidents")
 def list_incidents(limit: int = 50) -> dict:
     return {"incidents": RUNTIME.list_incidents(limit=limit)}

@@ -1,6 +1,6 @@
 ﻿param(
     [Parameter(Mandatory=$true)]
-    [ValidateSet("list-services","kill-pod","restart-deployment","scale")]
+    [ValidateSet("list-services","kill-pod","restart-deployment","scale","deployment-outage")]
     [string]$Action,
     [string]$Service = "cartservice",
     [int]$Replicas = 2,
@@ -21,5 +21,8 @@ switch ($Action) {
     }
     "scale" {
         kubectl scale deployment/$Service -n $Namespace --replicas=$Replicas
+    }
+    "deployment-outage" {
+        kubectl scale deployment/$Service -n $Namespace --replicas=0
     }
 }

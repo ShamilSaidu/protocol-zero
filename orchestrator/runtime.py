@@ -7,6 +7,8 @@ import os
 from typing import Any
 
 from database.repository import IncidentRepository
+from integrations.loki_client import LokiClient
+from integrations.redis_store import RedisEventStore
 from monitoring.detector import IncidentDetector
 from monitoring.models import build_incident_id, utc_now_iso
 from orchestrator.graph import ProtocolZeroOrchestrator
@@ -18,14 +20,22 @@ class ProtocolZeroRuntime:
         self.detector = IncidentDetector(namespace=self.namespace)
         self.repository = IncidentRepository()
         self.orchestrator = ProtocolZeroOrchestrator(namespace=self.namespace)
+        self.event_store = RedisEventStore()
+        self.loki = LokiClient(namespace=self.namespace)
         self.background_enabled = os.getenv("ENABLE_BACKGROUND_DETECTOR", "false").lower() == "true"
         self._background_task: asyncio.Task | None = None
 
     async def start(self) -> None:
+        self.event_store.record_event(
+            "runtime_started",
+            "Protocol Zero runtime started.",
+            {"background_detector": self.background_enabled},
+        )
         if self.background_enabled and self._background_task is None:
             self._background_task = asyncio.create_task(self._background_loop())
 
     async def stop(self) -> None:
+        self.event_store.record_event("runtime_stopped", "Protocol Zero runtime stopped.")
         if self._background_task:
             self._background_task.cancel()
             try:
@@ -39,8 +49,12 @@ class ProtocolZeroRuntime:
         while True:
             try:
                 await self.run_detection_cycle(auto_process=True)
-            except Exception:
-                pass
+            except Exception as exc:
+                self.event_store.record_event(
+                    "background_error",
+                    "Background detection cycle failed.",
+                    {"error": str(exc)},
+                )
             await asyncio.sleep(interval)
 
     async def run_detection_cycle(self, auto_process: bool = True) -> dict[str, Any]:
@@ -57,12 +71,23 @@ class ProtocolZeroRuntime:
             else:
                 self.repository.upsert_incident(incident, {"status": "detected", "incident": incident})
                 processed.append(incident)
-        return {
+        result = {
             "detected": len(incidents),
             "processed": len(processed),
             "skipped": skipped,
             "incidents": processed,
         }
+        self.event_store.record_event(
+            "detection_cycle",
+            "Completed detection cycle.",
+            {
+                "auto_process": auto_process,
+                "detected": result["detected"],
+                "processed": result["processed"],
+                "skipped": result["skipped"],
+            },
+        )
+        return result
 
     async def trigger_incident(
         self,
@@ -85,14 +110,34 @@ class ProtocolZeroRuntime:
             "namespace": self.namespace,
             "status": "active",
         }
+        self.event_store.record_event(
+            "manual_incident",
+            f"Manual incident triggered for {service}.",
+            {"incident_id": incident["incident_id"], "incident_type": incident_type, "severity": severity},
+        )
         return await self.process_incident(incident)
 
     async def process_incident(self, incident: dict[str, Any]) -> dict[str, Any]:
         initial_state = {"status": "investigating", "incident": incident}
+        self.event_store.record_event(
+            "incident_processing_started",
+            f"Processing incident {incident.get('incident_id')}.",
+            {"incident_id": incident.get("incident_id"), "service": incident.get("service_affected")},
+        )
         self.repository.upsert_incident(incident, initial_state)
         final_state = await self.orchestrator.handle_incident(incident)
         self.repository.save_state(incident["incident_id"], final_state)
-        return self.repository.get_incident(incident["incident_id"]) or {"payload": incident, "state": final_state}
+        persisted = self.repository.get_incident(incident["incident_id"]) or {"payload": incident, "state": final_state}
+        self.event_store.record_event(
+            "incident_processing_finished",
+            f"Incident {incident.get('incident_id')} reached {final_state.get('status', 'unknown')}.",
+            {
+                "incident_id": incident.get("incident_id"),
+                "status": final_state.get("status"),
+                "summary": final_state.get("summary"),
+            },
+        )
+        return persisted
 
     async def reprocess_incident(self, incident_id: str) -> dict[str, Any] | None:
         existing = self.repository.get_incident(incident_id)
@@ -123,14 +168,40 @@ class ProtocolZeroRuntime:
             {
                 "dry_run_mode": os.getenv("DRY_RUN_MODE", "true").lower() == "true",
                 "background_detector": self.background_enabled,
+                "prometheus": self.detector.collector.status(),
+                "redis": self.event_store.status(),
+                "loki": self.loki.status(),
             }
         )
         return stats
 
+    def list_events(self, limit: int = 25) -> list[dict[str, Any]]:
+        return self.event_store.list_events(limit=limit)
+
+    def query_logs(self, service: str | None = None, limit: int = 100, since_minutes: int = 15) -> dict[str, Any]:
+        return self.loki.query_logs(service=service, limit=limit, since_minutes=since_minutes)
+
     def health(self) -> dict[str, Any]:
+        prometheus_status = self.detector.collector.status()
+        redis_status = self.event_store.status()
+        loki_status = self.loki.status()
+        dependencies = {
+            "database_url": self.repository.effective_database_url,
+            "prometheus": prometheus_status,
+            "redis": redis_status,
+            "loki": loki_status,
+        }
+        status = "healthy"
+        if prometheus_status["configured"] and not prometheus_status["available"]:
+            status = "degraded"
+        if redis_status["configured"] and not redis_status["available"]:
+            status = "degraded"
+        if loki_status["configured"] and not loki_status["available"]:
+            status = "degraded"
         return {
-            "status": "healthy",
+            "status": status,
             "namespace": self.namespace,
             "database_url": self.repository.effective_database_url,
             "dry_run_mode": os.getenv("DRY_RUN_MODE", "true").lower() == "true",
+            "dependencies": dependencies,
         }
