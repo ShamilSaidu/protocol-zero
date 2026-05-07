@@ -1,0 +1,6 @@
+metric,value
+MTTD_sec,0.0
+MTTDiag_sec,0.0
+MTTR_sec,0.0
+RootCauseAccuracy_pct,0.0
+AgentAgreement_pct,0.0

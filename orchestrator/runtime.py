@@ -9,6 +9,7 @@ from typing import Any
 from database.repository import IncidentRepository
 from integrations.loki_client import LokiClient
 from integrations.redis_store import RedisEventStore
+from integrations.slack_notifier import SlackNotifier
 from monitoring.detector import IncidentDetector
 from monitoring.models import build_incident_id, utc_now_iso
 from orchestrator.graph import ProtocolZeroOrchestrator
@@ -22,6 +23,7 @@ class ProtocolZeroRuntime:
         self.orchestrator = ProtocolZeroOrchestrator(namespace=self.namespace)
         self.event_store = RedisEventStore()
         self.loki = LokiClient(namespace=self.namespace)
+        self.slack = SlackNotifier()
         self.background_enabled = os.getenv("ENABLE_BACKGROUND_DETECTOR", "false").lower() == "true"
         self._background_task: asyncio.Task | None = None
 
@@ -70,6 +72,7 @@ class ProtocolZeroRuntime:
                 processed.append(await self.process_incident(incident))
             else:
                 self.repository.upsert_incident(incident, {"status": "detected", "incident": incident})
+                self._notify_slack("detection", incident)
                 processed.append(incident)
         result = {
             "detected": len(incidents),
@@ -125,6 +128,7 @@ class ProtocolZeroRuntime:
             {"incident_id": incident.get("incident_id"), "service": incident.get("service_affected")},
         )
         self.repository.upsert_incident(incident, initial_state)
+        self._notify_slack("detection", incident)
         final_state = await self.orchestrator.handle_incident(incident)
         self.repository.save_state(incident["incident_id"], final_state)
         persisted = self.repository.get_incident(incident["incident_id"]) or {"payload": incident, "state": final_state}
@@ -137,6 +141,7 @@ class ProtocolZeroRuntime:
                 "summary": final_state.get("summary"),
             },
         )
+        self._notify_slack("lifecycle_complete", persisted)
         return persisted
 
     async def reprocess_incident(self, incident_id: str) -> dict[str, Any] | None:
@@ -171,6 +176,7 @@ class ProtocolZeroRuntime:
                 "prometheus": self.detector.collector.status(),
                 "redis": self.event_store.status(),
                 "loki": self.loki.status(),
+                "slack": self.slack.status(),
             }
         )
         return stats
@@ -190,6 +196,7 @@ class ProtocolZeroRuntime:
             "prometheus": prometheus_status,
             "redis": redis_status,
             "loki": loki_status,
+            "slack": self.slack.status(),
         }
         status = "healthy"
         if prometheus_status["configured"] and not prometheus_status["available"]:
@@ -205,3 +212,24 @@ class ProtocolZeroRuntime:
             "dry_run_mode": os.getenv("DRY_RUN_MODE", "true").lower() == "true",
             "dependencies": dependencies,
         }
+
+    def _notify_slack(self, event_type: str, payload: dict[str, Any]) -> None:
+        try:
+            if event_type == "detection":
+                result = self.slack.notify_detection(payload)
+            elif event_type == "lifecycle_complete":
+                result = self.slack.notify_lifecycle_complete(payload)
+            else:
+                return
+            if result.get("sent"):
+                self.event_store.record_event(
+                    "slack_notification_sent",
+                    f"Sent Slack notification for {result.get('incident_id')}.",
+                    {"event_type": event_type, "incident_id": result.get("incident_id")},
+                )
+        except Exception as exc:
+            self.event_store.record_event(
+                "slack_notification_failed",
+                "Slack notification failed.",
+                {"event_type": event_type, "error": str(exc)},
+            )

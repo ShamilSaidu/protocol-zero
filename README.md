@@ -11,6 +11,7 @@ Protocol Zero is an autonomous SRE incident-response MVP for a Kubernetes micros
 - supports dry-run and live remediation modes
 - generates a code-fix artifact and optional GitHub PR
 - writes a post-mortem for each processed incident
+- sends optional Slack Block Kit notifications through an incoming webhook
 - exposes a FastAPI API and dashboard
 
 ## Project structure
@@ -100,6 +101,7 @@ Required values:
 - `REDIS_URL=redis://localhost:6379`
 - `PROMETHEUS_URL=http://localhost:9090`
 - `LOKI_URL=http://localhost:3100`
+- `SLACK_WEBHOOK_URL` if Slack notifications should be enabled
 
 Recommended safe demo values:
 
@@ -107,7 +109,20 @@ Recommended safe demo values:
 DRY_RUN_MODE=true
 ALLOW_GITHUB_WRITE=false
 ENABLE_BACKGROUND_DETECTOR=false
+SLACK_NOTIFICATIONS_ENABLED=true
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/your/workspace/webhook
+PROTOCOL_ZERO_PUBLIC_URL=http://localhost:8000
+GRAFANA_URL=http://localhost:3000
+GRAFANA_DASHBOARD_URL=http://localhost:3000/d/protocol-zero-demo/protocol-zero-demo
 ```
+
+Slack setup notes:
+
+- create a Slack incoming webhook for the channel that should receive incident notifications
+- put the real webhook URL only in `.env`
+- do not commit `.env` or a real Slack webhook URL
+- after pulling this repo, each developer must create or provide their own webhook URL
+- see [docs/slack_notifications.md](docs/slack_notifications.md) for the full setup, testing flow, button behavior, and troubleshooting guide
 
 ## 5. Start PostgreSQL and Redis
 

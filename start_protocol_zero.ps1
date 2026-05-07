@@ -12,7 +12,7 @@ Start-Process powershell -ArgumentList '-NoExit', '-Command', 'kubectl port-forw
 Start-Sleep -Seconds 1
 Start-Process powershell -ArgumentList '-NoExit', '-Command', 'kubectl port-forward svc/loki 3100:3100'
 
-Write-Host "Launching Protocol Zero API..." -ForegroundColor Yellow
-Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd "' + (Get-Location).Path + '"; .\venv\Scripts\Activate.ps1; python main.py'
+Write-Host "Launching Protocol Zero API... (activating .venv311)" -ForegroundColor Yellow
+Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd "' + (Get-Location).Path + '"; .\.venv311\Scripts\Activate.ps1; python main.py'
 
 Write-Host "Done. Dashboard should be available at http://localhost:8000" -ForegroundColor Green

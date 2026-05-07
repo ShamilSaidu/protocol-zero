@@ -5,6 +5,7 @@ from __future__ import annotations
 from monitoring.metrics_collector import MetricsCollector
 from integrations.loki_client import LokiClient
 from integrations.redis_store import RedisEventStore
+from integrations.slack_notifier import SlackNotifier
 
 
 class FakeLokiHttpClient:
@@ -41,6 +42,15 @@ class FakeResponse:
     def raise_for_status(self) -> None:
         if self.status_code >= 400:
             raise RuntimeError(f"HTTP {self.status_code}")
+
+
+class FakeSlackHttpClient:
+    def __init__(self) -> None:
+        self.posts = []
+
+    def post(self, url: str, json: dict):
+        self.posts.append({"url": url, "json": json})
+        return FakeResponse({}, 200)
 
 
 class FakePrometheusClient:
@@ -85,3 +95,81 @@ def test_metrics_collector_status_reports_prometheus_health() -> None:
     assert status["configured"] is True
     assert status["available"] is True
     assert status["base_url"] == "http://localhost:9090"
+
+
+def test_slack_notifier_sends_detection_block_kit_payload() -> None:
+    client = FakeSlackHttpClient()
+    notifier = SlackNotifier(webhook_url="https://hooks.slack.test/services/demo", client=client)
+
+    result = notifier.notify_detection(
+        {
+            "incident_id": "INC-SLACK-001",
+            "type": "pod_restart_loop",
+            "severity": "critical",
+            "service_affected": "cartservice",
+            "pod": "cartservice-abc123-xyz",
+            "detected_at": "2026-05-07T12:00:00+00:00",
+            "error_message": "Pod restarted 5 times",
+            "alert_name": "PodRestartLoop",
+            "namespace": "default",
+        }
+    )
+
+    assert result == {"sent": True, "incident_id": "INC-SLACK-001"}
+    assert client.posts[0]["url"] == "https://hooks.slack.test/services/demo"
+    payload = client.posts[0]["json"]
+    assert payload["blocks"][0]["type"] == "header"
+    assert payload["blocks"][1]["type"] == "section"
+    assert payload["blocks"][4]["type"] == "actions"
+    assert [button["text"]["text"] for button in payload["blocks"][4]["elements"]] == [
+        "Open Protocol Zero",
+        "Full Logs",
+        "Grafana Logs",
+        "Prometheus",
+    ]
+    assert "INC-SLACK-001" in payload["text"]
+
+
+def test_slack_notifier_sends_lifecycle_payload_with_artifact_buttons() -> None:
+    client = FakeSlackHttpClient()
+    notifier = SlackNotifier(webhook_url="https://hooks.slack.test/services/demo", client=client)
+
+    result = notifier.notify_lifecycle_complete(
+        {
+            "payload": {
+                "incident_id": "INC-SLACK-003",
+                "type": "pod_restart_loop",
+                "severity": "critical",
+                "service_affected": "cartservice",
+                "error_message": "Pod restarted 5 times",
+            },
+            "state": {
+                "status": "simulated",
+                "summary": "Root cause isolated.",
+                "selected_hypothesis": {"root_cause": "Runtime health issue", "confidence": 0.81},
+                "verification": {"confidence": 0.81},
+                "remediation": {"status": "dry_run", "summary": "Restart the failing pod."},
+                "postmortem": {"path": "post_mortems/INC-SLACK-003.md"},
+            },
+        }
+    )
+
+    assert result == {"sent": True, "incident_id": "INC-SLACK-003"}
+    payload = client.posts[0]["json"]
+    action_blocks = [block for block in payload["blocks"] if block["type"] == "actions"]
+    assert action_blocks
+    assert [button["text"]["text"] for button in action_blocks[0]["elements"]] == [
+        "Open Protocol Zero",
+        "Post-Mortem",
+        "Grafana Dashboard",
+        "Grafana Logs",
+        "Prometheus",
+    ]
+
+
+def test_slack_notifier_skips_when_webhook_missing() -> None:
+    notifier = SlackNotifier(webhook_url="", client=FakeSlackHttpClient())
+
+    result = notifier.notify_detection({"incident_id": "INC-SLACK-002"})
+
+    assert result == {"sent": False, "reason": "not_configured", "incident_id": "INC-SLACK-002"}

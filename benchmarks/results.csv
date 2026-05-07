@@ -1,0 +1,9 @@
+timestamp,scenario,trial,injected_target,detection_time,diagnosis_time,resolution_time,total_time,selected_root_cause,confidence,root_cause_match,agent_agreement
+2026-05-07T17:10:47.746359,kill_pod,1,frontend,,,,,,,,
+2026-05-07T17:21:10.750194,kill_pod,2,frontend,,,,,,,,
+2026-05-07T17:31:32.476716,deployment_outage,1,frontend,,,,,,,,
+2026-05-07T17:41:52.566710,deployment_outage,2,frontend,,,,,,,,
+2026-05-07T17:52:11.985461,restart_deployment,1,frontend,,,,,,,,
+2026-05-07T18:02:33.755065,restart_deployment,2,frontend,,,,,,,,
+2026-05-07T18:12:53.522570,scale_down,1,frontend,,,,,,,,
+2026-05-07T18:23:14.421446,scale_down,2,frontend,,,,,,,,
