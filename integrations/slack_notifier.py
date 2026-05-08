@@ -65,19 +65,22 @@ class SlackNotifier:
         namespace = self._text(incident.get("namespace"), "default")
         detected_at = self._text(incident.get("detected_at"), "unknown")
         color_label = self._severity_label(severity)
-        header = f"{color_label} {severity.upper()} detection: {service}"
+        header = f"{color_label} {severity.upper()} detection"
         return {
-            "text": f"{header} ({incident_id})",
+            "text": f"{severity.upper()} detection for {service} ({incident_id})",
             "blocks": [
                 {"type": "header", "text": {"type": "plain_text", "text": header, "emoji": True}},
                 {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": f"*{self._slack_escape(service)}* fired `{self._slack_escape(alert_name)}` in `{self._slack_escape(namespace)}`.",
-                    },
-                    "accessory": self._severity_button(severity),
+                    "type": "context",
+                    "elements": [
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*{self._slack_escape(service)}* · `{self._slack_escape(alert_name)}` · `{self._slack_escape(namespace)}`",
+                        }
+                    ],
                 },
+                {"type": "divider"},
+                self._section_heading("Incident Snapshot"),
                 {
                     "type": "section",
                     "fields": [
@@ -87,6 +90,8 @@ class SlackNotifier:
                         self._mrkdwn_field("*Source*", self._text(incident.get("source"), "manual")),
                     ],
                 },
+                {"type": "divider"},
+                self._section_heading("Signal"),
                 {"type": "section", "text": {"type": "mrkdwn", "text": f"*Signal*\n{self._slack_escape(message)}"}},
                 self._actions_block(
                     [
@@ -96,7 +101,7 @@ class SlackNotifier:
                         self._button("Prometheus", self._prometheus_query_url(service), None, "open_prometheus"),
                     ]
                 ),
-                {"type": "context", "elements": [{"type": "mrkdwn", "text": "Protocol Zero detection pipeline"}]},
+                self._footer("Protocol Zero detection pipeline"),
             ],
         }
 
@@ -120,62 +125,64 @@ class SlackNotifier:
             self._mrkdwn_field("*Remediation*", self._text(remediation.get("status"), "not available")),
             self._mrkdwn_field("*Escalate*", "yes" if state.get("escalate_to_human") else "no"),
         ]
-        artifacts = self._artifact_lines(code_fix, postmortem)
+        artifact_buttons = self._artifact_buttons(incident_id, code_fix, postmortem)
         blocks: list[dict[str, Any]] = [
-            {"type": "header", "text": {"type": "plain_text", "text": header, "emoji": True}},
+            {"type": "header", "text": {"type": "plain_text", "text": "Protocol Zero diagnosis", "emoji": True}},
             {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": f"*{self._slack_escape(service)}* completed with `{self._slack_escape(status)}` after investigation, verification, remediation, and report generation.",
-                },
-                "accessory": self._status_button(status),
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*{self._slack_escape(service)}* · `{self._slack_escape(status)}` · `{self._slack_escape(incident_id)}`",
+                    }
+                ],
             },
+            {"type": "divider"},
+            self._section_heading("Outcome"),
             {"type": "section", "fields": fields},
-            {"type": "section", "text": {"type": "mrkdwn", "text": f"*Summary*\n{self._slack_escape(summary)}"}},
+            {"type": "divider"},
+            self._section_heading("Summary"),
+            {"type": "section", "text": {"type": "mrkdwn", "text": self._slack_escape(summary)}},
         ]
         remediation_summary = remediation.get("summary")
         if remediation_summary:
+            blocks.extend([{"type": "divider"}, self._section_heading("Remediation")])
             blocks.append(
                 {
                     "type": "section",
-                    "text": {"type": "mrkdwn", "text": f"*Remediation detail*\n{self._slack_escape(remediation_summary)}"},
+                    "text": {"type": "mrkdwn", "text": self._slack_escape(remediation_summary)},
                 }
             )
-        if artifacts:
-            blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": "*Generated artifacts*\n" + "\n".join(artifacts)}})
+        blocks.append({"type": "divider"})
         blocks.append(
             self._actions_block(
                 [
                     self._button("Open Protocol Zero", self._incident_url(incident_id), "primary", "open_protocol_zero"),
-                    self._button("Post-Mortem", self._postmortem_url(incident_id), None, "open_postmortem"),
+                    *artifact_buttons,
                     self._button("Grafana Dashboard", self.grafana_dashboard_url, None, "open_grafana_dashboard"),
                     self._button("Grafana Logs", self._grafana_explore_url(service), None, "open_grafana_logs"),
-                    self._button("Prometheus", self._prometheus_query_url(service), None, "open_prometheus"),
                 ]
             )
         )
-        blocks.append({"type": "context", "elements": [{"type": "mrkdwn", "text": "Protocol Zero incident lifecycle"}]})
-        return {"text": f"{header} ({incident_id})", "blocks": blocks}
+        blocks.append(self._footer("Protocol Zero incident lifecycle"))
+        return {"text": f"{header} ({incident_id})", "attachments": [{"color": "#FF4D4D", "blocks": blocks}]}
 
-    def _artifact_lines(self, code_fix: dict[str, Any], postmortem: dict[str, Any]) -> list[str]:
-        lines = []
-        artifact_path = code_fix.get("artifact_path")
-        if artifact_path:
-            lines.append(f"- Code fix artifact: `{self._slack_escape(str(artifact_path))}`")
-        pr_url = code_fix.get("pr_url")
-        if pr_url:
-            lines.append(f"- Pull request: <{pr_url}|open PR>")
-        postmortem_path = postmortem.get("path")
-        if postmortem_path:
-            lines.append(f"- Post-mortem: `{self._slack_escape(str(postmortem_path))}`")
-        return lines
+    def _artifact_buttons(self, incident_id: str, code_fix: dict[str, Any], postmortem: dict[str, Any]) -> list[dict[str, Any]]:
+        buttons = []
+        if code_fix.get("artifact_path"):
+            buttons.append(self._button("Code Fix", self._codefix_url(incident_id), None, "open_code_fix"))
+        if postmortem.get("path"):
+            buttons.append(self._button("Post-Mortem", self._postmortem_url(incident_id), None, "open_postmortem"))
+        return buttons
 
     def _incident_url(self, incident_id: str) -> str:
         return f"{self.protocol_zero_url}/?incident={quote(incident_id)}"
 
     def _postmortem_url(self, incident_id: str) -> str:
-        return f"{self.protocol_zero_url}/api/postmortems/{quote(incident_id)}"
+        return f"{self.protocol_zero_url}/postmortems/{quote(incident_id)}"
+
+    def _codefix_url(self, incident_id: str) -> str:
+        return f"{self.protocol_zero_url}/codefixes/{quote(incident_id)}"
 
     def _api_logs_url(self, service: str) -> str:
         params = urlencode({"service": service, "limit": 100, "since_minutes": 60})
@@ -193,6 +200,14 @@ class SlackNotifier:
         return {"type": "actions", "elements": [button for button in buttons if button.get("url")][:5]}
 
     @staticmethod
+    def _section_heading(text: str) -> dict[str, Any]:
+        return {"type": "section", "text": {"type": "mrkdwn", "text": f"*{text}*"}}
+
+    @staticmethod
+    def _footer(text: str) -> dict[str, Any]:
+        return {"type": "context", "elements": [{"type": "mrkdwn", "text": text}]}
+
+    @staticmethod
     def _button(label: str, url: str, style: str | None, action_id: str) -> dict[str, Any]:
         button = {
             "type": "button",
@@ -205,33 +220,13 @@ class SlackNotifier:
         return button
 
     @staticmethod
-    def _severity_button(severity: str) -> dict[str, Any]:
-        normalized = severity.lower()
-        style = "danger" if normalized in {"critical", "high"} else None
-        button = {
-            "type": "button",
-            "text": {"type": "plain_text", "text": severity.upper(), "emoji": True},
-            "action_id": "severity_badge",
-        }
-        if style:
-            button["style"] = style
-        return button
-
-    @staticmethod
-    def _status_button(status: str) -> dict[str, Any]:
-        style = "primary" if status.lower() in {"resolved", "simulated"} else None
-        button = {
-            "type": "button",
-            "text": {"type": "plain_text", "text": status.replace("_", " ").title(), "emoji": True},
-            "action_id": "status_badge",
-        }
-        if style:
-            button["style"] = style
-        return button
-
-    @staticmethod
     def _clean_base_url(url: str) -> str:
         return url.rstrip("/")
+
+    @staticmethod
+    def _incident_id_from_path(path: str) -> str:
+        name = str(path).replace("\\", "/").rsplit("/", 1)[-1]
+        return name[:-3] if name.endswith(".md") else name
 
     @staticmethod
     def _mrkdwn_field(label: str, value: str) -> dict[str, Any]:

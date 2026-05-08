@@ -119,9 +119,10 @@ def test_slack_notifier_sends_detection_block_kit_payload() -> None:
     assert client.posts[0]["url"] == "https://hooks.slack.test/services/demo"
     payload = client.posts[0]["json"]
     assert payload["blocks"][0]["type"] == "header"
-    assert payload["blocks"][1]["type"] == "section"
-    assert payload["blocks"][4]["type"] == "actions"
-    assert [button["text"]["text"] for button in payload["blocks"][4]["elements"]] == [
+    assert payload["blocks"][1]["type"] == "context"
+    assert any(block["type"] == "divider" for block in payload["blocks"])
+    action_blocks = [block for block in payload["blocks"] if block["type"] == "actions"]
+    assert [button["text"]["text"] for button in action_blocks[0]["elements"]] == [
         "Open Protocol Zero",
         "Full Logs",
         "Grafana Logs",
@@ -149,6 +150,7 @@ def test_slack_notifier_sends_lifecycle_payload_with_artifact_buttons() -> None:
                 "selected_hypothesis": {"root_cause": "Runtime health issue", "confidence": 0.81},
                 "verification": {"confidence": 0.81},
                 "remediation": {"status": "dry_run", "summary": "Restart the failing pod."},
+                "code_fix": {"artifact_path": "docs/codefixes/INC-SLACK-003.md"},
                 "postmortem": {"path": "post_mortems/INC-SLACK-003.md"},
             },
         }
@@ -156,15 +158,21 @@ def test_slack_notifier_sends_lifecycle_payload_with_artifact_buttons() -> None:
 
     assert result == {"sent": True, "incident_id": "INC-SLACK-003"}
     payload = client.posts[0]["json"]
-    action_blocks = [block for block in payload["blocks"] if block["type"] == "actions"]
+    assert payload["attachments"][0]["color"] == "#FF4D4D"
+    blocks = payload["attachments"][0]["blocks"]
+    assert blocks[0]["text"]["text"] == "Protocol Zero diagnosis"
+    action_blocks = [block for block in blocks if block["type"] == "actions"]
     assert action_blocks
     assert [button["text"]["text"] for button in action_blocks[0]["elements"]] == [
         "Open Protocol Zero",
+        "Code Fix",
         "Post-Mortem",
         "Grafana Dashboard",
         "Grafana Logs",
-        "Prometheus",
     ]
+    artifact_text = "\n".join(block.get("text", {}).get("text", "") for block in blocks if block["type"] == "section")
+    assert "Generated Artifacts" not in artifact_text
+    assert "Open code fix plan" not in artifact_text
 
 
 def test_slack_notifier_skips_when_webhook_missing() -> None:

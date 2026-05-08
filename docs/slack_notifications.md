@@ -4,7 +4,7 @@ Protocol Zero can send incident notifications to a Slack channel through a Slack
 
 ## What This Feature Does
 
-Slack notifications are sent for two major points in the incident lifecycle:
+Slack notifications are sent for two major points in the incident lifecycle. Each message is divided into clear Block Kit sections with separators, short headings, and action buttons so the Slack card is easier to scan during a demo or incident review. The completion message is sent as a red Slack attachment and uses buttons, not raw file paths, for generated artifacts.
 
 1. Detection notification
    - Sent as soon as Protocol Zero accepts a detected or manually triggered incident.
@@ -48,7 +48,8 @@ Current button behavior:
 - `Grafana Logs`: opens Grafana Explore with a service-focused Loki query.
 - `Grafana Dashboard`: opens the Protocol Zero Grafana dashboard.
 - `Prometheus`: opens Prometheus with a service-focused query.
-- `Post-Mortem`: opens the Protocol Zero post-mortem API endpoint for the incident.
+- `Code Fix`: opens the Protocol Zero code-fix plan UI page for the incident.
+- `Post-Mortem`: opens the Protocol Zero post-mortem UI page for the incident.
 
 If we later need buttons such as `Acknowledge`, `Escalate`, `Assign to me`, or `Run remediation`, we should create a full Slack app with interactivity enabled. That would require a public callback URL, Slack signing-secret validation, and FastAPI endpoints to handle Slack actions.
 
