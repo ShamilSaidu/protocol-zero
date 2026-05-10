@@ -298,16 +298,12 @@ If you want to show a live cluster fault and detection cycle, keep Prometheus, G
 Inject a fault:
 
 ```powershell
-.\scripts\chaos.ps1 -Action kill-pod -Service cartservice
+.\scripts\chaos.ps1 -Action deployment-outage -Service cartservice
 ```
 
 Note:
-- `kill-pod` is useful for a pod-level failure demonstration.
-- If you specifically want a `deployment_unavailable` incident, use:
-
-```powershell
-.\scripts\chaos.ps1 -Action deployment-outage -Service cartservice
-```
+- `deployment-outage` is the reliable live demo path for the current detector because it watches unavailable replicas.
+- `kill-pod` is still fine for showing pod churn, but it may recover before Prometheus produces a detector-visible incident.
 
 Then run detection:
 

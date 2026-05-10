@@ -15,6 +15,8 @@ switch ($Action) {
         $pod = kubectl get pods -n $Namespace -l app=$Service -o jsonpath='{.items[0].metadata.name}'
         if (-not $pod) { throw "No pod found for service '$Service'" }
         kubectl delete pod $pod -n $Namespace
+        Write-Host "Note: kill-pod is a fast disruption and may recover before Prometheus exposes a detector-visible incident."
+        Write-Host "For a reliable live detection demo with the current backend, use: .\\scripts\\chaos.ps1 -Action deployment-outage -Service $Service"
     }
     "restart-deployment" {
         kubectl rollout restart deployment/$Service -n $Namespace

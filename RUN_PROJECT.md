@@ -85,13 +85,15 @@ cd C:\\Users\\shami\\OneDrive\\Desktop\\protocol-zero
 
 .\\venv\\Scripts\\Activate.ps1
 
-.\\scripts\\chaos.ps1 -Action kill-pod -Service cartservice
+.\\scripts\\chaos.ps1 -Action deployment-outage -Service cartservice
 
 
 
 **Trigger detection :**
 
 Invoke-RestMethod -Uri "http://localhost:8000/api/incidents/detect?auto\_process=true" -Method POST
+
+Use `kill-pod` only for a quick pod churn demo. The current detector is much more reliable with `deployment-outage`, because it watches unavailable replicas rather than plain pod deletion.
 
 
 

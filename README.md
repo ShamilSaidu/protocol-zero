@@ -426,8 +426,12 @@ Open the incident detail and point out:
 Inject a real fault:
 
 ```powershell
-.\scripts\chaos.ps1 -Action kill-pod -Service cartservice
+.\scripts\chaos.ps1 -Action deployment-outage -Service cartservice
 ```
+
+Why this path:
+- `deployment-outage` reliably drives the current detector because it watches unavailable replicas.
+- `kill-pod` is still useful for showing pod churn, but it often recovers before Prometheus reports a detector-visible incident.
 
 Then run detection:
 
