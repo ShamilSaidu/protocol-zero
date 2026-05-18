@@ -77,7 +77,7 @@ Recent events: {events}
             confidence = 0.81
         elif incident_type in {"cpu_spike", "memory_spike"}:
             recommended_action = "Consider a short-term scale-out while investigating cluster or service pressure sources."
-            confidence = 0.71
+            confidence = 0.83
 
         evidence = [
             f"Observed pods: {len(pods)}",

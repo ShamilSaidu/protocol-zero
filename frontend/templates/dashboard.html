@@ -13,26 +13,28 @@
     .shell:before{content:"";position:absolute;inset:18px 24px auto 24px;height:320px;border-radius:36px;background:linear-gradient(135deg,rgba(77,184,255,.08),rgba(255,149,82,.06) 55%,rgba(127,226,162,.05));filter:blur(6px);pointer-events:none}
     .panel{background:linear-gradient(180deg,rgba(13,24,46,.92),rgba(6,12,24,.94));border:1px solid var(--line);border-radius:30px;backdrop-filter:blur(20px);box-shadow:var(--shadow);position:relative;overflow:hidden}
     .panel:before{content:"";position:absolute;inset:0 0 auto 0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);pointer-events:none}
-    .topbar,.hero,.metrics,.actions,.tables,.observability,.status-grid,.row,.filters,.detail-grid,.detail-stats{display:grid;gap:14px}.topbar{grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);padding:28px;margin-bottom:28px}.hero{grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);margin-bottom:24px}.metrics{grid-template-columns:repeat(5,minmax(0,1fr));margin-bottom:24px}.actions{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);margin-bottom:24px}.tables{grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);margin-bottom:24px;align-items:start}.observability{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
+    .topbar,.hero,.metrics,.actions,.tables,.observability,.status-grid,.row,.filters,.detail-grid,.detail-stats{display:grid;gap:14px}.topbar{grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);padding:28px;margin-bottom:28px;align-items:center}.hero{grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);margin-bottom:24px}.metrics{grid-template-columns:repeat(5,minmax(0,1fr));margin-bottom:24px}.actions{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);margin-bottom:24px}.tables{grid-template-columns:minmax(0,.92fr) minmax(420px,1.08fr);margin-bottom:24px;align-items:start}.observability{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
     .eyebrow,.label,.meta-title{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}h1,h2,h3,h4{margin:0;font-family:"Bahnschrift","Aptos Display","Segoe UI Variable Display",sans-serif}.brand{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:8px 0 10px}h1{font-size:clamp(36px,5vw,62px);line-height:.95}h2{font-size:clamp(28px,3vw,42px);line-height:1}h3{font-size:22px}.lead,.sub{margin:0;color:#bfd0e6;line-height:1.65;font-size:15px}.sub{font-size:13px;color:var(--muted)}
     .badge,.pill,.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-size:12px;border:1px solid transparent;background:rgba(255,255,255,.06)}.badge.info{background:rgba(77,184,255,.14);color:#8ad8ff;border-color:rgba(77,184,255,.24)}.good{color:var(--green)!important;border-color:rgba(127,226,162,.22)!important;background:rgba(127,226,162,.08)!important}.warn{color:var(--yellow)!important;border-color:rgba(255,199,106,.24)!important;background:rgba(255,199,106,.08)!important}.bad{color:var(--red)!important;border-color:rgba(255,127,127,.24)!important;background:rgba(255,127,127,.08)!important}
     .top-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mini,.hero-copy,.hero-meta,.section,.detail-card,.meta-card,.stat-card,.status-card{padding:18px}.mini,.meta-card,.stat-card,.status-card,.detail-card{border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.028));border:1px solid var(--line)}.mini strong,.meta-value,.value{display:block;font-size:22px;margin:8px 0 4px}.hero-copy{padding:34px}.hero-meta{padding:24px;display:grid;gap:12px}
     .hero-copy:after{content:"";position:absolute;right:-80px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(77,184,255,.18),transparent 70%);pointer-events:none}
-    .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.7fr);gap:18px;margin-top:22px}.signal-canvas{min-height:280px;border-radius:26px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(11,21,37,.99),rgba(6,11,20,.94));position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}.signal-canvas:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:30px 30px;opacity:.4}.signal-canvas:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at center,rgba(77,184,255,.12),transparent 52%),radial-gradient(circle at 72% 22%,rgba(255,149,82,.08),transparent 24%)}
-    .radar-sweep,.radar-ring,.radar-center,.radar-copy,.radar-stats,.radar-label,.radar-node{position:absolute;z-index:2}.radar-sweep{inset:8%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg,rgba(77,184,255,.18) 52deg,transparent 104deg);mix-blend-mode:screen;transform-origin:center;animation:spin 4.4s linear infinite;opacity:.95}.radar-ring{left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(255,255,255,.08);box-shadow:0 0 0 1px rgba(77,184,255,.04) inset}.ring-outer{width:252px;height:252px}.ring-mid{width:176px;height:176px}.ring-inner{width:108px;height:108px}.radar-center{left:50%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(77,184,255,.55) 45%,rgba(77,184,255,.08) 72%,transparent 76%);box-shadow:0 0 30px rgba(77,184,255,.45)}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.7fr);gap:18px;margin-top:16px}.signal-canvas{min-height:280px;border-radius:26px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(11,21,37,.99),rgba(6,11,20,.94));position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}.signal-canvas:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:30px 30px;opacity:.4}.signal-canvas:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at center,rgba(77,184,255,.12),transparent 52%),radial-gradient(circle at 72% 22%,rgba(255,149,82,.08),transparent 24%)}
+    .radar-sweep,.radar-ring,.radar-center,.radar-copy,.radar-label,.radar-node{position:absolute;z-index:2}.radar-sweep{inset:8%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg,rgba(77,184,255,.18) 52deg,transparent 104deg);mix-blend-mode:screen;transform-origin:center;animation:spin 4.4s linear infinite;opacity:.95}.radar-ring{left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(255,255,255,.08);box-shadow:0 0 0 1px rgba(77,184,255,.04) inset}.ring-outer{width:252px;height:252px}.ring-mid{width:176px;height:176px}.ring-inner{width:108px;height:108px}.radar-center{left:50%;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(77,184,255,.55) 45%,rgba(77,184,255,.08) 72%,transparent 76%);box-shadow:0 0 30px rgba(77,184,255,.45)}
     .radar-node{border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 22px currentColor,0 0 0 1px rgba(255,255,255,.12) inset;animation:pulse 2.8s ease-in-out infinite}.node-active{left:72%;top:33%;color:var(--blue);background:var(--blue)}.node-review{left:33%;top:56%;color:var(--orange);background:var(--orange);animation-delay:.4s}.node-resolved{left:58%;top:74%;color:var(--green);background:var(--green);animation-delay:.8s}
     .radar-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#c8d8ee;background:rgba(5,12,22,.72);border:1px solid rgba(255,255,255,.07);padding:6px 9px;border-radius:999px;backdrop-filter:blur(8px);z-index:4}.label-active{left:74%;top:16%}.label-review{left:9%;top:52%}.label-resolved{left:53%;top:79%}
-    .radar-copy{left:26px;top:24px;max-width:230px}.radar-copy .meta-title{margin-bottom:8px}.radar-copy strong{display:block;font-size:28px;line-height:1.02;margin-bottom:8px}.radar-copy .sub{line-height:1.55}
-    .radar-stats{left:24px;right:24px;bottom:10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.signal-stat{padding:14px 12px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px)}.signal-stat span{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}.signal-stat strong{display:block;font-size:18px;line-height:1.1}
+    .radar-copy{left:26px;top:24px;max-width:230px}.radar-copy .meta-title{margin-bottom:4px}
+    .signal-stats-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}.signal-stat{padding:14px 12px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px)}.signal-stat span{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}.signal-stat strong{display:block;font-size:18px;line-height:1.1}
     .section{padding:26px}select,input,textarea,button{width:100%;padding:13px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font:inherit;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease,background .18s ease}button{cursor:pointer;font-weight:600}button:hover{transform:translateY(-1px)}button:focus,input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(77,184,255,.5);box-shadow:0 0 0 3px rgba(77,184,255,.12)}button.primary{background:linear-gradient(135deg,#4db8ff,#277eff);border-color:rgba(77,184,255,.36);color:#fff;box-shadow:0 12px 28px rgba(39,126,255,.24)}button.secondary{background:linear-gradient(135deg,#ff9552,#ff764a);border-color:rgba(255,149,82,.3);color:#111a28;box-shadow:0 12px 28px rgba(255,118,74,.22)}button.ghost{background:rgba(255,255,255,.04)}button.ghost:hover{background:rgba(255,255,255,.08)}textarea{min-height:104px;resize:vertical}select option{color:#091729}
     .row{grid-template-columns:repeat(4,minmax(0,1fr))}.row.two{grid-template-columns:repeat(2,minmax(0,1fr))}.filters{grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(140px,.4fr));margin-bottom:16px}
     .timeline-shell,.events-shell,.logs-shell,.detail-shell{max-height:calc(100vh - 210px);overflow:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:rgba(77,184,255,.35) transparent}.timeline-shell{display:grid;gap:14px;scroll-snap-type:y proximity;padding-bottom:12px}.incident{padding:18px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,24,43,.94),rgba(8,15,26,.94));cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;scroll-snap-align:start;position:relative}.incident:hover,.incident.active{transform:translateY(-2px);border-color:rgba(77,184,255,.34);box-shadow:0 16px 40px rgba(0,0,0,.26)}.incident:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,transparent,var(--blue),transparent);opacity:0;transition:opacity .18s ease}.incident.active:before{opacity:1}.incident-top,.event-top,.log-top,.detail-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start}.incident-title{font-size:20px;margin-bottom:6px}.incident-bottom{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.incident-mini{padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line)}.muted{color:var(--muted)}
     .detail-wrap{position:sticky;top:32px}.detail-panel{overflow:hidden}.detail-head{padding:28px 24px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(77,184,255,.06),transparent)}.detail-head h3{font-size:30px;margin-bottom:8px;line-height:1.05}.detail-toolbar,.tabs{display:flex;flex-wrap:wrap;gap:10px;padding:0 24px 16px}.detail-toolbar{border-bottom:1px solid rgba(175,210,255,.08)}.tabs{padding-top:16px}.tab{width:auto;padding:10px 14px;border-radius:999px;font-size:13px}.tab.active{background:linear-gradient(135deg,rgba(77,184,255,.2),rgba(255,149,82,.18));border-color:rgba(77,184,255,.28)}.detail-shell{padding:18px 24px 24px}.detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-card.wide{grid-column:1/-1}.detail-card h4{font-size:16px;margin:0 0 10px}.detail-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:14px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}.stat span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}.stat strong{display:block;font-size:14px;line-height:1.55}
     .events-shell,.logs-shell{display:grid;gap:12px}.event,.log{padding:16px 18px;border-radius:20px;background:var(--card);border:1px solid var(--line)}.event-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
     pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:Consolas,"Cascadia Code",monospace;font-size:12px;line-height:1.7;color:#d7ecff}.json,.markdown{padding:18px;border-radius:20px;background:rgba(3,8,16,.88);border:1px solid var(--line)}.markdown{font-size:13px}.empty{padding:24px;border-radius:22px;border:1px dashed rgba(175,210,255,.18);text-align:center;color:var(--muted);line-height:1.7;background:rgba(255,255,255,.03)}
+    .nav-bar{position:sticky;top:4px;z-index:30;display:flex;gap:8px;padding:10px 14px;margin-bottom:24px;background:rgba(6,12,24,.82);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:999px;width:fit-content}.nav-btn{width:auto;padding:10px 22px;border-radius:999px;font-size:13px;font-weight:600;background:transparent;border:1px solid transparent;color:var(--muted);transition:all .18s ease}.nav-btn:hover{background:rgba(255,255,255,.06);color:var(--text);transform:none}.nav-btn.active{background:linear-gradient(135deg,rgba(77,184,255,.18),rgba(255,149,82,.14));border-color:rgba(77,184,255,.3);color:var(--text)}.page{display:none}.page.active{display:block}
+    .scenario-desc{padding:16px 18px;border-radius:18px;background:rgba(77,184,255,.06);border:1px solid rgba(77,184,255,.16);font-size:13px;color:#bfd0e6;line-height:1.65;margin-bottom:14px;display:none}.scenario-desc.visible{display:block}
     @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.82}50%{transform:translate(-50%,-50%) scale(1.18);opacity:1}}
     @media (max-width:1280px){.topbar,.hero,.actions,.tables,.observability{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.detail-wrap{position:static}}
-    @media (max-width:980px){.shell{padding:20px 14px 40px}.shell:before{left:14px;right:14px;top:12px}.topbar,.hero-copy,.hero-meta,.section{padding:20px}.top-actions,.status-grid,.metrics,.row,.row.two,.filters,.hero-grid,.detail-grid,.detail-stats,.incident-bottom,.radar-stats{grid-template-columns:1fr}.timeline-shell,.events-shell,.logs-shell,.detail-shell{max-height:none}.detail-head{grid-template-columns:1fr}.radar-copy{position:relative;left:auto;top:auto;padding:22px 22px 0;max-width:none}.radar-stats{position:relative;left:auto;right:auto;bottom:auto;padding:0 22px 22px}.radar-label{display:none}.ring-outer{width:210px;height:210px}.ring-mid{width:148px;height:148px}.ring-inner{width:92px;height:92px}.node-active{left:70%;top:34%}.node-review{left:31%;top:57%}.node-resolved{left:57%;top:73%}}
+    @media (max-width:980px){.shell{padding:20px 14px 40px}.shell:before{left:14px;right:14px;top:12px}.topbar,.hero-copy,.hero-meta,.section{padding:20px}.top-actions,.status-grid,.metrics,.row,.row.two,.filters,.hero-grid,.detail-grid,.detail-stats,.incident-bottom,.signal-stats-row{grid-template-columns:1fr}.timeline-shell,.events-shell,.logs-shell,.detail-shell{max-height:none}.detail-head{grid-template-columns:1fr}.radar-copy{position:relative;left:auto;top:auto;padding:22px 22px 0;max-width:none}.radar-label{display:none}.ring-outer{width:210px;height:210px}.ring-mid{width:148px;height:148px}.ring-inner{width:92px;height:92px}.node-active{left:70%;top:34%}.node-review{left:31%;top:57%}.node-resolved{left:57%;top:73%}}
   </style>
 </head>
 <body>
@@ -47,146 +49,226 @@
       </div>
       <div class="top-actions">
         <div class="mini"><div class="label">Mission Clock</div><strong id="clock">Loading...</strong><div class="sub">Asia/Kolkata</div></div>
-        <div class="mini"><div class="label">Auto Sync</div><strong id="sync">8s</strong><div class="sub" id="lastSync">Awaiting first refresh</div></div>
+        <div class="mini"><div class="label">Auto Sync</div><strong id="sync">180s</strong><div class="sub" id="lastSync">Awaiting first refresh</div></div>
         <button id="refreshBtn" class="primary">Refresh Mission Control</button>
         <button id="snapshotBtn" class="ghost">Download Snapshot JSON</button>
       </div>
     </header>
 
-    <section class="hero">
-      <div class="panel hero-copy">
-        <div class="eyebrow">Command Surface</div>
-        <h2>Incident response that feels alive, not flat.</h2>
-        <p class="lead" style="margin-top:14px">Move through active incidents, inspect the current state instantly, and keep the most important context in view while you work the queue.</p>
-        <div id="heroBadges" style="display:flex;flex-wrap:wrap;gap:10px;margin:18px 0"></div>
-        <div class="hero-grid">
-          <div class="signal-canvas">
-            <div class="radar-sweep"></div>
-            <div class="radar-ring ring-outer"></div>
-            <div class="radar-ring ring-mid"></div>
-            <div class="radar-ring ring-inner"></div>
-            <div class="radar-center"></div>
-            <div id="nodeActive" class="radar-node node-active"></div>
-            <div id="nodeReview" class="radar-node node-review"></div>
-            <div id="nodeResolved" class="radar-node node-resolved"></div>
-            <div id="labelActive" class="radar-label label-active">Active</div>
-            <div id="labelReview" class="radar-label label-review">Review</div>
-            <div id="labelResolved" class="radar-label label-resolved">Resolved</div>
-            <div class="radar-copy">
-              <div class="meta-title">Operational Pulse</div>
-              <strong id="signalHeadline">Monitoring live flow</strong>
-              <div class="sub" id="signalSubhead">The queue, state transitions, and system posture come together here.</div>
+    <nav style="display:flex;justify-content:center;margin-bottom:28px">
+      <div class="nav-bar">
+        <button class="nav-btn active" data-page="overview">Overview</button>
+        <button class="nav-btn" data-page="incidents">Incidents</button>
+        <button class="nav-btn" data-page="control">Control</button>
+        <button class="nav-btn" data-page="observability">Observability</button>
+        <button class="nav-btn" data-page="tests">Tests</button>
+      </div>
+    </nav>
+
+    <!-- OVERVIEW -->
+    <div id="page-overview" class="page active">
+      <section class="hero">
+        <div class="panel hero-copy">
+          <div class="eyebrow">Command Surface</div>
+          <h2>Live System Status </h2>
+          <p class="lead" style="margin-top:14px">Move through active incidents, inspect the current state instantly, and keep the most important context in view while you work the queue.</p>
+          <div id="heroBadges" style="display:flex;flex-wrap:wrap;gap:10px;margin:18px 0"></div>
+
+          <!-- Headline sits ABOVE the radar grid -->
+          <div id="signalHeadlineAbove" style="font-size:clamp(22px,2.8vw,34px);font-weight:700;font-family:'Bahnschrift','Aptos Display',sans-serif;margin-bottom:4px;line-height:1.1"></div>
+
+          <div class="hero-grid">
+            <div class="signal-canvas">
+              <div class="radar-sweep"></div>
+              <div class="radar-ring ring-outer"></div>
+              <div class="radar-ring ring-mid"></div>
+              <div class="radar-ring ring-inner"></div>
+              <div class="radar-center"></div>
+              <div id="nodeActive" class="radar-node node-active"></div>
+              <div id="nodeReview" class="radar-node node-review"></div>
+              <div id="nodeResolved" class="radar-node node-resolved"></div>
+              <div id="labelActive" class="radar-label label-active">Active</div>
+              <div id="labelReview" class="radar-label label-review">Review</div>
+              <div id="labelResolved" class="radar-label label-resolved">Resolved</div>
+              <div class="radar-copy">
+                <div class="meta-title">Operational Pulse</div>
+              </div>
             </div>
-            <div id="signalStats" class="radar-stats"></div>
+            <div class="hero-meta">
+              <div class="meta-card"><div class="meta-title">Mission Health</div><div class="meta-value" id="health">Loading...</div><div class="sub" id="healthNote">Checking dependencies.</div></div>
+              <div class="meta-card"><div class="meta-title">Namespace</div><div class="meta-value" id="namespace">default</div><div class="sub">Cluster namespace under watch.</div></div>
+              <div class="meta-card"><div class="meta-title">Queue Focus</div><div class="meta-value" id="queueFocus">0 incidents</div><div class="sub" id="queueFocusNote">Select an incident to open its current state.</div></div>
+            </div>
           </div>
-          <div class="hero-meta">
-            <div class="meta-card"><div class="meta-title">Mission Health</div><div class="meta-value" id="health">Loading...</div><div class="sub" id="healthNote">Checking dependencies.</div></div>
-            <div class="meta-card"><div class="meta-title">Namespace</div><div class="meta-value" id="namespace">default</div><div class="sub">Cluster namespace under watch.</div></div>
-            <div class="meta-card"><div class="meta-title">Queue Focus</div><div class="meta-value" id="queueFocus">0 incidents</div><div class="sub" id="queueFocusNote">Select an incident to open its current state.</div></div>
+
+          <!-- Stats sit BELOW the radar grid -->
+          <div id="signalStats" class="signal-stats-row"></div>
+        </div>
+        <div class="panel hero-meta">
+          <div class="eyebrow">Runtime Status</div>
+          <h3 style="margin:2px 0 6px">Systems Picture</h3>
+          <p class="sub">Live system posture across the services that power the control plane.</p>
+          <div class="status-grid" style="margin-top:12px">
+            <div class="status-card"><div class="meta-title">Mode</div><div class="meta-value" id="mode">Loading...</div><div class="sub">Dry run safety state.</div></div>
+            <div class="status-card"><div class="meta-title">Detector</div><div class="meta-value" id="detector">Loading...</div><div class="sub">Background or manual.</div></div>
+            <div class="status-card"><div class="meta-title">Database</div><div class="meta-value" id="db">Loading...</div><div class="sub" id="dbNote">Waiting on storage signal.</div></div>
+            <div class="status-card"><div class="meta-title">Redis</div><div class="meta-value" id="redisStatus">Loading...</div><div class="sub" id="redisNote">Checking stream backend.</div></div>
+            <div class="status-card"><div class="meta-title">Loki</div><div class="meta-value" id="lokiStatus">Loading...</div><div class="sub" id="lokiNote">Checking log availability.</div></div>
+            <div class="status-card"><div class="meta-title">Prometheus</div><div class="meta-value" id="promStatus">Loading...</div><div class="sub" id="promNote">Checking metrics availability.</div></div>
           </div>
         </div>
-      </div>
-      <div class="panel hero-meta">
-        <div class="eyebrow">Runtime Status</div>
-        <h3 style="margin:2px 0 6px">Systems Picture</h3>
-        <p class="sub">Live system posture across the services that power the control plane.</p>
-        <div class="status-grid" style="margin-top:12px">
-          <div class="status-card"><div class="meta-title">Mode</div><div class="meta-value" id="mode">Loading...</div><div class="sub">Dry run safety state.</div></div>
-          <div class="status-card"><div class="meta-title">Detector</div><div class="meta-value" id="detector">Loading...</div><div class="sub">Background or manual.</div></div>
-          <div class="status-card"><div class="meta-title">Database</div><div class="meta-value" id="db">Loading...</div><div class="sub" id="dbNote">Waiting on storage signal.</div></div>
-          <div class="status-card"><div class="meta-title">Redis</div><div class="meta-value" id="redisStatus">Loading...</div><div class="sub" id="redisNote">Checking stream backend.</div></div>
-          <div class="status-card"><div class="meta-title">Loki</div><div class="meta-value" id="lokiStatus">Loading...</div><div class="sub" id="lokiNote">Checking log availability.</div></div>
-          <div class="status-card"><div class="meta-title">Prometheus</div><div class="meta-value" id="promStatus">Loading...</div><div class="sub" id="promNote">Checking metrics availability.</div></div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="metrics">
-      <div class="panel stat-card"><div class="label">Active</div><div class="value" id="active">0</div><div class="sub">Incidents currently in play.</div></div>
-      <div class="panel stat-card"><div class="label">Resolved</div><div class="value" id="resolved">0</div><div class="sub">Closed or completed flows.</div></div>
-      <div class="panel stat-card"><div class="label">Total</div><div class="value" id="total">0</div><div class="sub">Stored incidents in the repo.</div></div>
-      <div class="panel stat-card"><div class="label">Needs Review</div><div class="value" id="reviewCount">0</div><div class="sub">Incidents waiting on a human.</div></div>
-      <div class="panel stat-card"><div class="label">Critical Open</div><div class="value" id="criticalCount">0</div><div class="sub">Critical incidents not resolved.</div></div>
-    </section>
+      <section class="metrics">
+        <div class="panel stat-card"><div class="label">Active</div><div class="value" id="active">0</div><div class="sub">Incidents currently in play.</div></div>
+        <div class="panel stat-card"><div class="label">Resolved</div><div class="value" id="resolved">0</div><div class="sub">Closed or completed flows.</div></div>
+        <div class="panel stat-card"><div class="label">Total</div><div class="value" id="total">0</div><div class="sub">Stored incidents in the repo.</div></div>
+        <div class="panel stat-card"><div class="label">Needs Review</div><div class="value" id="reviewCount">0</div><div class="sub">Incidents waiting on a human.</div></div>
+        <div class="panel stat-card"><div class="label">Critical Open</div><div class="value" id="criticalCount">0</div><div class="sub">Critical incidents not resolved.</div></div>
+      </section>
+    </div>
 
-    <section class="actions">
-      <div class="panel section">
-        <div class="eyebrow">Manual Control</div>
-        <h3 style="margin:8px 0 6px">Trigger Incident</h3>
-        <p class="sub" style="margin-bottom:16px">Launch a new incident flow with the service, failure mode, and any operator context you want carried into the run.</p>
-        <div class="row">
-          <select id="service"><option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option></select>
-          <select id="incidentType"><option value="pod_restart_loop">pod_restart_loop</option><option value="cpu_spike">cpu_spike</option><option value="memory_spike">memory_spike</option><option value="deployment_unavailable">deployment_unavailable</option></select>
-          <select id="severity"><option>critical</option><option>high</option><option>medium</option></select>
-          <button id="triggerBtn" class="secondary">Trigger and Process</button>
+    <!-- INCIDENTS -->
+    <div id="page-incidents" class="page">
+      <section class="tables">
+        <div class="panel section">
+          <div class="eyebrow">Live Queue</div>
+          <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin:8px 0 16px">
+            <div><h3>Incident Timeline</h3><p class="sub" style="margin-top:6px">Browse the queue with fast filters, clear status reading, and instant incident switching.</p></div>
+            <div class="sub" id="countNote">0 incidents loaded</div>
+          </div>
+          <div class="filters">
+            <input id="incidentSearch" type="search" placeholder="Search incident ID, service, type, status, or summary..." />
+            <select id="statusFilter"><option value="">All statuses</option><option value="active">active</option><option value="investigating">investigating</option><option value="simulated">simulated</option><option value="needs_review">needs_review</option><option value="resolved">resolved</option><option value="closed">closed</option></select>
+            <select id="severityFilter"><option value="">All severities</option><option value="critical">critical</option><option value="high">high</option><option value="medium">medium</option></select>
+          </div>
+          <div id="incidentRows" class="timeline-shell"><div class="empty">Loading incidents...</div></div>
         </div>
-        <div class="row two" style="margin-top:12px">
-          <textarea id="errorMessage" placeholder="Optional operator note or error context..."></textarea>
-          <div class="status-card"><div class="meta-title">Operator Note</div><div class="meta-value" style="font-size:18px">Add context before the run begins</div><div class="sub">Capture a failing endpoint, rollout suspicion, or any signal you want available from the first step.</div></div>
+        <div class="detail-wrap">
+          <div id="detailPanel" class="panel detail-panel">
+            <div class="detail-head"><div><div class="eyebrow">Incident Intelligence</div><h3>No Incident Selected</h3><p class="sub">Open an incident to inspect its state, artifacts, and supporting evidence.</p></div></div>
+            <div class="detail-shell"><div class="empty">Choose an incident from the queue to bring its full run state into focus.</div></div>
+          </div>
         </div>
-      </div>
-      <div class="panel section">
-        <div class="eyebrow">Fast Actions</div>
-        <h3 style="margin:8px 0 6px">Control Stack</h3>
-        <p class="sub" style="margin-bottom:16px">Refresh, rerun, and export from the same workspace without losing your place.</p>
-        <div class="row two">
-          <button id="detectorBtn" class="primary">Run Detector</button>
-          <button id="reprocessBtn" class="ghost">Reprocess Selected</button>
-        </div>
-        <div class="row two" style="margin-top:12px">
-          <button id="downloadIncidentBtn" class="ghost">Download Selected JSON</button>
-          <button id="downloadPostmortemBtn" class="ghost">Download Post-Mortem</button>
-        </div>
-        <div id="controlBadges" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px"></div>
-      </div>
-    </section>
+      </section>
+    </div>
 
-    <section class="tables">
-      <div class="panel section">
-        <div class="eyebrow">Live Queue</div>
-        <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin:8px 0 16px">
-          <div><h3>Incident Timeline</h3><p class="sub" style="margin-top:6px">Browse the queue with fast filters, clear status reading, and instant incident switching.</p></div>
-          <div class="sub" id="countNote">0 incidents loaded</div>
+    <!-- CONTROL -->
+    <div id="page-control" class="page">
+      <section class="actions">
+        <div class="panel section">
+          <div class="eyebrow">Manual Control</div>
+          <h3 style="margin:8px 0 6px">Trigger Incident</h3>
+          <p class="sub" style="margin-bottom:16px">Launch a new incident flow with the service, failure mode, and any operator context you want carried into the run.</p>
+          <div class="row">
+            <select id="service"><option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option></select>
+            <select id="incidentType"><option value="pod_restart_loop">pod_restart_loop</option><option value="cpu_spike">cpu_spike</option><option value="memory_spike">memory_spike</option><option value="deployment_unavailable">deployment_unavailable</option></select>
+            <select id="severity"><option>critical</option><option>high</option><option>medium</option></select>
+            <button id="triggerBtn" class="secondary">Trigger and Process</button>
+          </div>
+          <div class="row two" style="margin-top:12px">
+            <textarea id="errorMessage" placeholder="Optional operator note or error context..."></textarea>
+            <div class="status-card"><div class="meta-title">Operator Note</div><div class="meta-value" style="font-size:18px">Add context before the run begins</div><div class="sub">Capture a failing endpoint, rollout suspicion, or any signal you want available from the first step.</div></div>
+          </div>
         </div>
-        <div class="filters">
-          <input id="incidentSearch" type="search" placeholder="Search incident ID, service, type, status, or summary..." />
-          <select id="statusFilter"><option value="">All statuses</option><option value="active">active</option><option value="investigating">investigating</option><option value="simulated">simulated</option><option value="needs_review">needs_review</option><option value="resolved">resolved</option><option value="closed">closed</option></select>
-          <select id="severityFilter"><option value="">All severities</option><option value="critical">critical</option><option value="high">high</option><option value="medium">medium</option></select>
+        <div class="panel section">
+          <div class="eyebrow">Fast Actions</div>
+          <h3 style="margin:8px 0 6px">Control Stack</h3>
+          <p class="sub" style="margin-bottom:16px">Refresh, rerun, and export from the same workspace without losing your place.</p>
+          <div class="row two">
+            <button id="detectorBtn" class="primary">Run Detector</button>
+            <button id="reprocessBtn" class="ghost">Reprocess Selected</button>
+          </div>
+          <div class="row two" style="margin-top:12px">
+            <button id="downloadIncidentBtn" class="ghost">Download Selected JSON</button>
+            <button id="downloadPostmortemBtn" class="ghost">Download Post-Mortem</button>
+          </div>
+          <div id="controlBadges" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px"></div>
         </div>
-        <div id="incidentRows" class="timeline-shell"><div class="empty">Loading incidents...</div></div>
-      </div>
-      <div class="detail-wrap">
-        <div id="detailPanel" class="panel detail-panel">
-          <div class="detail-head"><div><div class="eyebrow">Incident Intelligence</div><h3>No Incident Selected</h3><p class="sub">Open an incident to inspect its state, artifacts, and supporting evidence.</p></div></div>
-          <div class="detail-shell"><div class="empty">Choose an incident from the queue to bring its full run state into focus.</div></div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
-    <section class="observability">
-      <div class="panel section">
-        <div class="eyebrow">Runtime Feed</div>
-        <h3 style="margin:8px 0 6px">Activity Stream</h3>
-        <p class="sub" style="margin-bottom:16px">Recent orchestration events, detector cycles, and operator-triggered actions in one stream.</p>
-        <div id="eventStream" class="events-shell"><div class="empty">Loading activity stream...</div></div>
-      </div>
-      <div class="panel section">
-        <div class="eyebrow">Observability</div>
-        <h3 style="margin:8px 0 6px">Live Loki Logs</h3>
-        <p class="sub" style="margin-bottom:16px">Recent log lines across the selected service window.</p>
-        <div class="row" style="grid-template-columns:minmax(0,1fr) 120px auto">
-          <select id="logService"><option value="">all services</option><option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option></select>
-          <input id="logWindow" type="number" min="1" max="120" value="15" />
-          <button id="loadLogsBtn" class="primary">Load Logs</button>
+    <!-- OBSERVABILITY -->
+    <div id="page-observability" class="page">
+      <section class="observability">
+        <div class="panel section">
+          <div class="eyebrow">Runtime Feed</div>
+          <h3 style="margin:8px 0 6px">Activity Stream</h3>
+          <p class="sub" style="margin-bottom:16px">Recent orchestration events, detector cycles, and operator-triggered actions in one stream.</p>
+          <div id="eventStream" class="events-shell"><div class="empty">Loading activity stream...</div></div>
         </div>
-        <p class="sub" id="logsMeta" style="margin:12px 0 14px">Logs will appear here after the first query.</p>
-        <div id="logs" class="logs-shell"><div class="empty">No logs loaded yet.</div></div>
-      </div>
-    </section>
+        <div class="panel section">
+          <div class="eyebrow">Observability</div>
+          <h3 style="margin:8px 0 6px">Live Loki Logs</h3>
+          <p class="sub" style="margin-bottom:16px">Recent log lines across the selected service window.</p>
+          <div class="row" style="grid-template-columns:minmax(0,1fr) 120px auto">
+            <select id="logService"><option value="">all services</option><option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option></select>
+            <input id="logWindow" type="number" min="1" max="120" value="15" />
+            <button id="loadLogsBtn" class="primary">Load Logs</button>
+          </div>
+          <p class="sub" id="logsMeta" style="margin:12px 0 14px">Logs will appear here after the first query.</p>
+          <div id="logs" class="logs-shell"><div class="empty">No logs loaded yet.</div></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- TESTS -->
+    <div id="page-tests" class="page">
+      <section class="actions">
+        <div class="panel section">
+          <div class="eyebrow">Test Scenarios</div>
+          <h3 style="margin:8px 0 6px">Trigger a Test</h3>
+          <p class="sub" style="margin-bottom:16px">Select a scenario to pre-fill the form, then hit Trigger. Each test exercises a different part of the pipeline. After triggering, you'll be switched to the Incidents tab automatically.</p>
+          <div style="margin-bottom:14px">
+            <select id="testScenario" onchange="loadScenario(this.value)">
+              <option value="">— Load a test scenario —</option>
+              <option value="1">Test 1 · Full end-to-end auto-heal</option>
+              <option value="2">Test 2 · Aggressive healing (critical frontend)</option>
+              <option value="3">Test 3 · Conservative strategy + rollback</option>
+              <option value="4">Test 4 · Rate limiter burst</option>
+              <option value="5">Test 5 · OOM → scale-up</option>
+              <option value="6">Test 6 · MONITOR_ONLY low severity</option>
+              <option value="7">Test 7 · Dependency chain failure</option>
+              <option value="8">Test 8 · ESCALATE_HUMAN safety net</option>
+              <option value="9">Test 9 · Real pod crash loop</option>
+              <option value="10">Test 10 · CPU spike → scale out</option>
+              <option value="11">Test 11 · Parallel cascade</option>
+              <option value="12">Test 12 · Code fix artifact (Go panic)</option>
+              <option value="13">Test 13 · Adaptive strategy switching</option>
+              <option value="14">Test 14 · Post-mortem quality</option>
+              <option value="15">Test 15 · Full cluster detection sweep</option>
+            </select>
+          </div>
+          <div id="scenarioDesc" class="scenario-desc"></div>
+          <div class="row">
+            <select id="service2"><option>cartservice</option><option>checkoutservice</option><option>frontend</option><option>paymentservice</option><option>productcatalogservice</option><option>recommendationservice</option><option>currencyservice</option><option>adservice</option><option>emailservice</option><option>shippingservice</option></select>
+            <select id="incidentType2"><option value="pod_restart_loop">pod_restart_loop</option><option value="cpu_spike">cpu_spike</option><option value="memory_spike">memory_spike</option><option value="deployment_unavailable">deployment_unavailable</option><option value="elevated_latency">elevated_latency</option></select>
+            <select id="severity2"><option>critical</option><option>high</option><option>medium</option><option>low</option></select>
+            <button id="triggerTestBtn" class="secondary">Trigger and Process</button>
+          </div>
+          <div style="margin-top:12px">
+            <textarea id="errorMessage2" placeholder="Error message / context — loaded automatically from scenario..."></textarea>
+          </div>
+        </div>
+        <div class="panel section">
+          <div class="eyebrow">Reference</div>
+          <h3 style="margin:8px 0 6px">What Each Test Covers</h3>
+          <p class="sub" style="margin-bottom:16px">Quick reference for what system component each test exercises.</p>
+          <div class="status-grid">
+            <div class="status-card"><div class="meta-title">Tests 1–3</div><div class="sub" style="margin-top:6px">End-to-end heal · Aggressive strategy · Conservative + rollback</div></div>
+            <div class="status-card"><div class="meta-title">Tests 4–6</div><div class="sub" style="margin-top:6px">Rate limiter · OOM scale-up · Monitor-only decision</div></div>
+            <div class="status-card"><div class="meta-title">Tests 7–9</div><div class="sub" style="margin-top:6px">Dependency chain · Human escalation · Live pod logs</div></div>
+            <div class="status-card"><div class="meta-title">Tests 10–12</div><div class="sub" style="margin-top:6px">CPU scale-out · Parallel cascade · Code fix artifact</div></div>
+            <div class="status-card"><div class="meta-title">Tests 13–15</div><div class="sub" style="margin-top:6px">Adaptive strategy · Post-mortem quality · Full cluster sweep</div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
   </div>
 
   <script>
-    const ZONE='Asia/Kolkata',AUTO=8000;
+    const ZONE='Asia/Kolkata',AUTO=180000;
     const F_CLOCK=new Intl.DateTimeFormat('en-IN',{timeZone:ZONE,weekday:'short',day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
     const F_LONG=new Intl.DateTimeFormat('en-IN',{timeZone:ZONE,dateStyle:'medium',timeStyle:'medium'});
     const F_SHORT=new Intl.DateTimeFormat('en-IN',{timeZone:ZONE,day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',hour12:true});
@@ -209,10 +291,55 @@
     function schedule(){clearTimeout(state.timer);state.next=Date.now()+AUTO;state.timer=setTimeout(()=>refreshAll({keep:true,silent:true}),AUTO);clock()}
     function save(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
     function tag(label,kind=''){return `<span class="chip ${kind}">${esc(label)}</span>`}
-    function nodeSize(value){return `${Math.max(12,Math.min(34,12+(Number(value)||0)*3.5))}px`}
+    function nodeSize(value,maxValue){const v=Number(value)||0,max=Number(maxValue)||1,proportion=max>0?v/max:0;return `${12+proportion*(34-12)}px`}
+    function switchPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));const page=document.getElementById('page-'+name);if(page)page.classList.add('active');document.querySelector(`.nav-btn[data-page="${name}"]`)?.classList.add('active')}
     function incidentMatchesFilters(i){const search=q('incidentSearch').value.trim().toLowerCase(),status=q('statusFilter').value,severity=q('severityFilter').value;const hay=[i.incident_id,i.service_affected,i.incident_type,i.status,i.summary,i.payload?.error_message].join(' ').toLowerCase();return(!status||String(i.status).toLowerCase()===status)&&(!severity||String(i.severity).toLowerCase()===severity)&&(!search||hay.includes(search))}
     function ensureSelectedVisible(){if(!state.selected||incidentMatchesFilters(state.selected))return false;const hadFilters=Boolean(q('incidentSearch').value||q('statusFilter').value||q('severityFilter').value);q('incidentSearch').value='';q('statusFilter').value='';q('severityFilter').value='';return hadFilters}
-    function renderHero(){const inc=state.incidents||[],active=Number(state.stats?.active||0),critical=inc.filter(i=>String(i.severity).toLowerCase()==='critical'&&!['resolved','closed'].includes(String(i.status).toLowerCase())).length,review=inc.filter(i=>String(i.status).toLowerCase()==='needs_review').length,resolved=inc.filter(i=>['resolved','closed'].includes(String(i.status).toLowerCase())).length,selectedService=state.selected?.service_affected||state.selected?.payload?.service_affected||'No active focus';q('heroBadges').innerHTML=[tag(`Health ${human(state.health?.status||'unknown')}`,tone(state.health?.status||'unknown')),tag(`Critical open ${critical}`,critical?'bad':'good'),tag(`Needs review ${review}`,review?'warn':'good'),tag(`Resolved ${resolved}`,resolved?'good':'')].join('');set('health',human(state.health?.status||'unknown'));set('healthNote',state.health?.status==='healthy'?'All configured dependencies are responding.':'One or more dependencies needs attention.');set('namespace',state.health?.namespace||'default');set('queueFocus',`${inc.length} incident${inc.length===1?'':'s'}`);set('queueFocusNote',state.selected?`Focused on ${selectedService}.`:'Select an incident to open its current state.');set('signalHeadline',critical?`${critical} critical incident${critical===1?'':'s'} in motion`:`${active} active incident${active===1?'':'s'}`);set('signalSubhead',state.selected?`${human(state.selected.status||'unknown')} on ${selectedService}. Updated ${rel(state.selected.updated_at)}.`:`System posture updates as incidents move through the queue.`);q('signalStats').innerHTML=[['Queue',inc.length],['Active',active],['Critical',critical],['Focus',selectedService]].map(([label,value])=>`<div class="signal-stat"><span>${esc(label)}</span><strong>${esc(String(value))}</strong></div>`).join('');const activeNode=q('nodeActive'),reviewNode=q('nodeReview'),resolvedNode=q('nodeResolved');[activeNode,reviewNode,resolvedNode].forEach((node,idx)=>{const value=[active,review,resolved][idx],size=nodeSize(value);node.style.width=size;node.style.height=size});q('labelActive').textContent=`Active ${active}`;q('labelReview').textContent=`Review ${review}`;q('labelResolved').textContent=`Resolved ${resolved}`}
+    function renderHero(){
+      const inc=state.incidents||[],
+            active=Number(state.stats?.active||0),
+            critical=inc.filter(i=>String(i.severity).toLowerCase()==='critical'&&!['resolved','closed'].includes(String(i.status).toLowerCase())).length,
+            review=inc.filter(i=>String(i.status).toLowerCase()==='needs_review').length,
+            resolved=inc.filter(i=>['resolved','closed'].includes(String(i.status).toLowerCase())).length,
+            selectedService=state.selected?.service_affected||state.selected?.payload?.service_affected||'No active focus';
+
+      q('heroBadges').innerHTML=[
+        tag(`Health ${human(state.health?.status||'unknown')}`,tone(state.health?.status||'unknown')),
+        tag(`Critical open ${critical}`,critical?'bad':'good'),
+        tag(`Needs review ${review}`,review?'warn':'good'),
+        tag(`Resolved ${resolved}`,resolved?'good':'')
+      ].join('');
+
+      // Headline above the radar
+      const headlineText=critical
+        ?`${critical} critical incident${critical===1?'':'s'} in motion`
+        :`${active} active incident${active===1?'':'s'}`;
+      q('signalHeadlineAbove').textContent=headlineText;
+
+      set('health',human(state.health?.status||'unknown'));
+      set('healthNote',state.health?.status==='healthy'?'All configured dependencies are responding.':'One or more dependencies needs attention.');
+      set('namespace',state.health?.namespace||'default');
+      set('queueFocus',`${inc.length} incident${inc.length===1?'':'s'}`);
+      set('queueFocusNote',state.selected?`Focused on ${selectedService}.`:'Select an incident to open its current state.');
+
+      // Stats below the radar
+      q('signalStats').innerHTML=[
+        ['Queue',inc.length],
+        ['Active',active],
+        ['Critical',critical],
+        ['Focus',selectedService]
+      ].map(([label,value])=>`<div class="signal-stat"><span>${esc(label)}</span><strong>${esc(String(value))}</strong></div>`).join('');
+
+      const activeNode=q('nodeActive'),reviewNode=q('nodeReview'),resolvedNode=q('nodeResolved');
+      const values=[active,review,resolved],maxVal=Math.max(...values);
+      [activeNode,reviewNode,resolvedNode].forEach((node,idx)=>{
+        const value=values[idx],size=nodeSize(value,maxVal);
+        node.style.width=size;node.style.height=size
+      });
+      q('labelActive').textContent=`Active ${active}`;
+      q('labelReview').textContent=`Review ${review}`;
+      q('labelResolved').textContent=`Resolved ${resolved}`;
+    }
     function renderRuntime(){const s=state.stats||{},redis=s.redis||{},loki=s.loki||{},prom=s.prometheus||{};set('mode',s.dry_run_mode?'Dry Run':'Live');set('detector',s.background_detector?'Background':'Manual');set('db',s.database_url?'Connected':'n/a');set('dbNote',s.database_url||'No database URL reported.');set('redisStatus',redis.backend==='redis'?'Live':'Fallback');set('redisNote',redis.available?'Redis-backed stream is active.':'Using in-memory activity fallback.');set('lokiStatus',loki.available?'Live':'Unavailable');set('lokiNote',loki.available?'Live log queries are enabled.':'Loki is not reachable right now.');set('promStatus',prom.available?'Live':(prom.configured?'Unavailable':'Inactive'));set('promNote',prom.available?'Metrics are available.':'Collector is not returning live metrics.');renderHero()}
     function renderStats(){const s=state.stats||{},inc=state.incidents||[],review=inc.filter(i=>String(i.status).toLowerCase()==='needs_review').length,critical=inc.filter(i=>String(i.severity).toLowerCase()==='critical'&&!['resolved','closed'].includes(String(i.status).toLowerCase())).length;set('active',String(s.active||0));set('resolved',String(s.resolved||0));set('total',String(s.total_incidents||0));set('reviewCount',String(review));set('criticalCount',String(critical));q('controlBadges').innerHTML=[tag(`Mode ${s.dry_run_mode?'Dry Run':'Live'}`,tone(s.dry_run_mode?'Dry Run':'Live')),tag(`Detector ${s.background_detector?'Background':'Manual'}`,tone(s.background_detector?'Background':'Manual')),tag(`Queue ${(state.incidents||[]).length} loaded`,'good')].join('')}
     function renderIncidents(){const filtered=(state.incidents||[]).filter(incidentMatchesFilters);set('countNote',`${filtered.length} of ${state.incidents.length} incidents shown`);q('incidentRows').innerHTML=filtered.length?filtered.map(i=>{const s=i.service_affected||i.payload?.service_affected||'unknown',t=i.incident_type||i.payload?.type||'unknown',sum=i.summary||i.state?.summary||i.payload?.error_message||'No summary available yet.',det=i.payload?.detected_at||i.created_at;return `<article class="incident ${state.selectedId===i.incident_id?'active':''}" data-id="${esc(i.incident_id)}"><div class="incident-top"><div><div class="incident-title">${esc(s)}</div><div class="sub">${esc(human(t))} · ${esc(i.incident_id)}</div></div><div style="display:flex;flex-wrap:wrap;gap:8px"><span class="pill ${tone(i.status)}">${esc(human(i.status||'unknown'))}</span><span class="pill ${sev(i.severity)}">${esc(String(i.severity||'unknown').toUpperCase())}</span></div></div><div class="sub" style="line-height:1.6">${esc(sum)}</div><div class="incident-bottom"><div class="incident-mini"><div class="label">Detected</div><div>${esc(fmtS(det))}<br><span class="muted">${esc(rel(det))}</span></div></div><div class="incident-mini"><div class="label">Cycle Duration</div><div>${esc(i.state?.started_at?dur(i.state.started_at,i.state.completed_at||i.updated_at):dur(i.created_at,i.updated_at))}<br><span class="muted">${esc(fmtS(i.updated_at))}</span></div></div></div></article>`}).join(''):'<div class="empty">No incidents match the current filters.</div>'}
@@ -226,12 +353,74 @@
     async function loadIncident(id,{keepTab=true,quiet=false}={}){if(!keepTab)state.tab='overview';state.selectedId=id;state.postmortem=null;try{state.selected=await get(`/api/incidents/${encodeURIComponent(id)}`);const cleared=ensureSelectedVisible();renderRuntime();renderIncidents();renderDetail();if(cleared&&!quiet)note('Cleared filters so the selected incident stays visible.');if(state.tab==='postmortem'||state.selected.postmortem_path||state.selected.state?.postmortem?.path)void loadPostmortem(id,true);if(!quiet)note(`Loaded ${id}.`)}catch(e){note(`Unable to load incident: ${e.message}`,true)}}
     async function refreshAll({keep=true,silent=false}={}){try{await refreshData()}catch(e){if(!silent)note(`Refresh hit an issue: ${e.message}`,true)}renderRuntime();renderStats();renderIncidents();renderEvents();const ids=new Set((state.incidents||[]).map(i=>i.incident_id));if(keep&&state.selectedId&&ids.has(state.selectedId))await loadIncident(state.selectedId,{keepTab:true,quiet:true});else if(state.incidents.length)await loadIncident(state.incidents[0].incident_id,{keepTab:false,quiet:true});else{state.selectedId=null;state.selected=null;state.postmortem=null;renderDetail()}state.lastRefresh=new Date();clock();schedule();if(!silent)note('Mission control refreshed.')}
     async function triggerIncident(){const body={service:q('service').value,incident_type:q('incidentType').value,severity:q('severity').value},msg=q('errorMessage').value.trim();if(msg)body.error_message=msg;try{const incident=await get('/api/incidents/trigger',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});q('errorMessage').value='';state.selectedId=incident.incident_id;await refreshAll({keep:true,silent:true});await loadIncident(incident.incident_id,{keepTab:false,quiet:true});note(`Triggered ${incident.incident_id}.`)}catch(e){note(`Trigger failed: ${e.message}`,true)}}
-    async function runDetector(){try{const p=await get('/api/incidents/detect?auto_process=true',{method:'POST'});await refreshAll({keep:true,silent:true});const detected=Number(p.detected||0),processed=Number(p.processed||0),skipped=Number(p.skipped||0);if(!detected)note('Detector found no new incidents. Pod deletion alone may recover before Prometheus reports a detector-visible fault.');else note(`Detector run completed. Detected ${detected}, processed ${processed}, skipped ${skipped}.`)}catch(e){note(`Detector run failed: ${e.message}`,true)}}
+    async function runDetector(){try{const p=await get('/api/incidents/detect?auto_process=true',{method:'POST'});await refreshAll({keep:true,silent:true});const detected=Number(p.detected||0),processed=Number(p.processed||0),skipped=Number(p.skipped||0);if(!detected)note('Detector found no new incidents.');else note(`Detector run completed. Detected ${detected}, processed ${processed}, skipped ${skipped}.`)}catch(e){note(`Detector run failed: ${e.message}`,true)}}
     async function reprocess(){if(!state.selectedId){note('Select an incident before reprocessing.',true);return}try{await get(`/api/incidents/${encodeURIComponent(state.selectedId)}/reprocess`,{method:'POST'});await refreshAll({keep:true,silent:true});await loadIncident(state.selectedId,{keepTab:false,quiet:true});note(`Reprocessed ${state.selectedId}.`)}catch(e){note(`Reprocess failed: ${e.message}`,true)}}
     function downloadIncident(){if(!state.selected){note('Select an incident before downloading JSON.',true);return}save(`${state.selected.incident_id}.json`,JSON.stringify(state.selected,null,2),'application/json');note(`Downloaded ${state.selected.incident_id}.json`)}
     async function downloadPostmortem(){if(!state.selectedId){note('Select an incident before downloading its post-mortem.',true);return}if(!state.postmortem||state.postmortem==='loading')await loadPostmortem(state.selectedId,true);if(!state.postmortem?.content){note('No post-mortem content is available for this incident yet.',true);return}save(`${state.selectedId}-postmortem.md`,state.postmortem.content,'text/markdown');note(`Downloaded ${state.selectedId} post-mortem.`)}
     function downloadSnapshot(){save(`protocol-0-snapshot-${new Date().toISOString().replaceAll(':','-').replaceAll('.','-')}.json`,JSON.stringify({generated_at_utc:new Date().toISOString(),rendered_timezone:ZONE,health:state.health,stats:state.stats,incidents:state.incidents,selected_incident:state.selected,events:state.events,logs:state.logs},null,2),'application/json');note('Downloaded dashboard snapshot JSON.')}
-    function wire(){q('refreshBtn').addEventListener('click',()=>refreshAll({keep:true}));q('snapshotBtn').addEventListener('click',downloadSnapshot);q('triggerBtn').addEventListener('click',triggerIncident);q('detectorBtn').addEventListener('click',runDetector);q('reprocessBtn').addEventListener('click',reprocess);q('downloadIncidentBtn').addEventListener('click',downloadIncident);q('downloadPostmortemBtn').addEventListener('click',downloadPostmortem);q('loadLogsBtn').addEventListener('click',loadLogs);q('incidentRows').addEventListener('click',e=>{const card=e.target.closest('[data-id]');if(card)loadIncident(card.getAttribute('data-id'),{keepTab:false})});q('detailPanel').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;state.tab=b.getAttribute('data-tab');renderDetail();if(state.tab==='postmortem'&&state.selectedId)void loadPostmortem(state.selectedId,true)});['incidentSearch','statusFilter','severityFilter'].forEach(id=>{q(id).addEventListener('input',renderIncidents);q(id).addEventListener('change',renderIncidents)});window.addEventListener('scroll',scrollMeter,{passive:true})}
+
+    const SCENARIOS={
+      '1':{service:'cartservice',type:'pod_restart_loop',severity:'critical',msg:'',desc:'Full end-to-end. Real Prometheus detection → closed-loop healer restarts the deployment by itself. Watch: decision_result.final_decision = EXECUTE_IMMEDIATELY.'},
+      '2':{service:'frontend',type:'deployment_unavailable',severity:'critical',msg:'0/3 replicas available, all pods in CrashLoopBackOff',desc:'Decision engine picks AGGRESSIVE healing strategy on a critical user-facing service. Watch: healing strategy = AGGRESSIVE.'},
+      '3':{service:'currencyservice',type:'pod_restart_loop',severity:'medium',msg:'pod restarted 2 times in 10 minutes',desc:'Low-confidence incident → conservative strategy → auto-rollback if restart makes things worse. Watch: closed_loop_healing.rollback_summary.'},
+      '4':{service:'cartservice',type:'pod_restart_loop',severity:'high',msg:'rate limiter burst test',desc:'Trigger this 11 times fast to hit MAX_ACTIONS_PER_HOUR=10. Watch: 11th incident shows remediation.status = rate_limited.'},
+      '5':{service:'recommendationservice',type:'memory_spike',severity:'high',msg:'OOMKilled: container exceeded memory limit 512Mi, working set 509Mi, rss 498Mi',desc:'Investigation agent detects OOM pattern → switches from restart to scale. Watch: action = scale_deployment not delete_pod.'},
+      '6':{service:'adservice',type:'elevated_latency',severity:'low',msg:'p95 latency 420ms, baseline 380ms',desc:'Decision engine chooses to do nothing and just watch. Watch: final_decision = MONITOR_ONLY, no kubectl commands executed.'},
+      '7':{service:'checkoutservice',type:'pod_restart_loop',severity:'high',msg:'rpc error: code = Unavailable desc = connection refused 10.96.93.205:7070, cartservice unreachable after 3 retries',desc:'Pattern matching for connection refused overrides default root cause. Watch: root cause = Downstream dependency connectivity failure.'},
+      '8':{service:'paymentservice',type:'pod_restart_loop',severity:'critical',msg:'x509: certificate has expired or is not yet valid: current time 2026-05-10 is after 2026-01-01',desc:'Unknown incident type + low confidence → system escalates instead of acting. Watch: status = escalated, no kubectl action taken.'},
+      '9':{service:'emailservice',type:'pod_restart_loop',severity:'high',msg:'CrashLoopBackOff: container exited with code 1, check live pod logs for root cause',desc:'Investigation agent pulls live pod logs via kubectl, not just the error_message. Watch: investigation_findings[0].raw_context.log_excerpt contains real logs.'},
+      '10':{service:'productcatalogservice',type:'cpu_spike',severity:'high',msg:'CPU throttling at 94%, 2 cores requested, 1.88 cores used continuously for 8 minutes',desc:'cpu_spike takes a different remediation path — scales to 2 replicas. Watch: action = scale_deployment --replicas=2, not a restart.'},
+      '11':{service:'cartservice',type:'pod_restart_loop',severity:'critical',msg:'parallel cascade test — trigger checkoutservice simultaneously in a second tab',desc:'Two incidents processed simultaneously without one blocking the other. Watch: two separate incident IDs both processed through the full pipeline.'},
+      '12':{service:'shippingservice',type:'pod_restart_loop',severity:'high',msg:'panic: runtime error: index out of range [5] with length 3\ngoroutine 1 [running]: main.calculateShippingQuote(...)\n\t/src/quote.go:89 +0x1d4',desc:'Developer agent reads file hints and generates a fix referencing actual files. Watch: code_fix.artifact_path exists, references quote.go with bounds check fix.'},
+      '13':{service:'cartservice',type:'deployment_unavailable',severity:'critical',msg:'adaptive strategy test — set STRATEGY_SWITCH_THRESHOLD=1 and ENABLE_ADAPTIVE_STRATEGY=true in .env first',desc:'If first healing cycle fails, healer switches from CONSERVATIVE to AGGRESSIVE automatically. Watch: healing_cycles > 1, strategy changes in audit log.'},
+      '14':{service:'paymentservice',type:'pod_restart_loop',severity:'critical',msg:'FATAL: failed to connect to payment gateway stripe.com:443 - TLS handshake timeout after 30000ms. Retried 5 times. Pod entered CrashLoopBackOff. Last successful transaction 14 minutes ago.',desc:'Rich incident to produce the most detailed post-mortem. Watch: post-mortem has Summary, Timeline, Root Cause, Action Items referencing paymentservice and TLS error.'},
+      '15':{service:'cartservice',type:'pod_restart_loop',severity:'critical',msg:'full cluster sweep — also manually break recommendationservice before triggering',desc:'Detection across the entire cluster at once. Watch: detected count ≥ 2, different remediation actions chosen per service.'},
+    };
+
+    function loadScenario(id){
+      if(!id)return;
+      const s=SCENARIOS[id];
+      if(!s)return;
+      q('service2').value=s.service;
+      q('incidentType2').value=s.type;
+      q('severity2').value=s.severity;
+      q('errorMessage2').value=s.msg;
+      const desc=q('scenarioDesc');
+      desc.textContent=`Test ${id}: ${s.desc}`;
+      desc.classList.add('visible');
+      note(`Loaded Test ${id} — hit Trigger when ready.`);
+    }
+
+    function triggerTest(){
+      const body={service:q('service2').value,incident_type:q('incidentType2').value,severity:q('severity2').value},msg=q('errorMessage2').value.trim();
+      if(msg)body.error_message=msg;
+      get('/api/incidents/trigger',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+        .then(incident=>{
+          state.selectedId=incident.incident_id;
+          switchPage('incidents');
+          refreshAll({keep:true,silent:true}).then(()=>loadIncident(incident.incident_id,{keepTab:false,quiet:true}));
+          note(`Triggered ${incident.incident_id} — switched to Incidents tab.`);
+        })
+        .catch(e=>note(`Trigger failed: ${e.message}`,true));
+    }
+
+    function wire(){
+      document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>switchPage(b.getAttribute('data-page'))));
+      q('refreshBtn').addEventListener('click',()=>refreshAll({keep:true}));
+      q('snapshotBtn').addEventListener('click',downloadSnapshot);
+      q('triggerBtn').addEventListener('click',triggerIncident);
+      q('triggerTestBtn').addEventListener('click',triggerTest);
+      q('detectorBtn').addEventListener('click',runDetector);
+      q('reprocessBtn').addEventListener('click',reprocess);
+      q('downloadIncidentBtn').addEventListener('click',downloadIncident);
+      q('downloadPostmortemBtn').addEventListener('click',downloadPostmortem);
+      q('loadLogsBtn').addEventListener('click',loadLogs);
+      q('incidentRows').addEventListener('click',e=>{const card=e.target.closest('[data-id]');if(card)loadIncident(card.getAttribute('data-id'),{keepTab:false})});
+      q('detailPanel').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;state.tab=b.getAttribute('data-tab');renderDetail();if(state.tab==='postmortem'&&state.selectedId)void loadPostmortem(state.selectedId,true)});
+      ['incidentSearch','statusFilter','severityFilter'].forEach(id=>{q(id).addEventListener('input',renderIncidents);q(id).addEventListener('change',renderIncidents)});
+      window.addEventListener('scroll',scrollMeter,{passive:true});
+    }
+
     async function init(){wire();clock();scrollMeter();renderLogs(null);setInterval(clock,1000);await refreshAll({keep:true,silent:true});await loadLogs()}
     init();
   </script>

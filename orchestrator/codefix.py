@@ -45,6 +45,7 @@ class CodeFixGenerator:
         incident = state["incident"]
         hypothesis = state.get("selected_hypothesis", {})
         findings = state.get("investigation_findings", [])
+        remediation = state.get("remediation", {})
         prompt = f"""
 Create a concise markdown fix plan with sections:
 Summary, Likely Files, Proposed Changes, Validation Plan.
@@ -70,6 +71,26 @@ File hints: {info.file_hints}
             "- Run service-specific tests plus the Protocol Zero e2e flow.",
             "- Confirm incident no longer reproduces after rollout.",
         ])
+        
+        # Build remediation actions section
+        remediation_section = ""
+        if remediation.get("actions"):
+            action_lines = []
+            for action in remediation["actions"]:
+                command = action.get("command", "N/A")
+                status = action.get("status", "unknown").upper()
+                description = action.get("description", "")
+                action_lines.append(f"- **Status**: `{status}`")
+                action_lines.append(f"- **Type**: `{action.get('kind', 'unknown')}`")
+                action_lines.append(f"- **Target**: `{action.get('target', 'N/A')}`")
+                action_lines.append(f"- **Command**: `{command}`")
+                action_lines.append(f"- **Description**: {description}")
+                action_lines.append("")
+            remediation_section = f"""## Remediation Actions Executed
+
+{chr(10).join(action_lines).rstrip()}
+"""
+        
         return f"""# Code Fix Plan for {incident.get('incident_id')}
 
 ## Summary
@@ -84,6 +105,6 @@ File hints: {info.file_hints}
 ## Proposed Changes
 {change_lines}
 
-## Validation Plan
+{remediation_section}## Validation Plan
 {validation_lines}
 """

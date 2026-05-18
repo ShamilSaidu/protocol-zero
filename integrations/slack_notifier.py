@@ -153,6 +153,24 @@ class SlackNotifier:
                     "text": {"type": "mrkdwn", "text": self._slack_escape(remediation_summary)},
                 }
             )
+            # Add remediation action commands
+            actions = remediation.get("actions", [])
+            if actions:
+                command_lines = []
+                for action in actions:
+                    command = action.get("command", "N/A")
+                    action_type = action.get("kind", "unknown")
+                    target = action.get("target", "N/A")
+                    status_str = action.get("status", "UNKNOWN")
+                    command_lines.append(f"*{action_type}* on `{target}` [{status_str}]")
+                    command_lines.append(f"```{self._slack_escape(command)}```")
+                
+                blocks.append(
+                    {
+                        "type": "section",
+                        "text": {"type": "mrkdwn", "text": "\n".join(command_lines)},
+                    }
+                )
         blocks.append({"type": "divider"})
         blocks.append(
             self._actions_block(

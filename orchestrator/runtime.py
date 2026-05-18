@@ -167,6 +167,29 @@ class ProtocolZeroRuntime:
         with open(path, encoding="utf-8") as handle:
             return {"path": path, "content": handle.read()}
 
+    def get_codefix(self, incident_id: str) -> dict[str, Any] | None:
+        from pathlib import Path
+        
+        # Try to get path from database first
+        path = None
+        incident = self.repository.get_incident(incident_id)
+        if incident:
+            path = incident.get("state", {}).get("code_fix", {}).get("artifact_path")
+        
+        # Try primary path first
+        if path and os.path.exists(path):
+            with open(path, encoding="utf-8") as handle:
+                return {"path": path, "content": handle.read()}
+        
+        # Fallback: check docs/codefixes/ directory (works even if incident not in DB)
+        fallback = Path("docs") / "codefixes" / f"{incident_id}.md"
+        if fallback.exists():
+            path = str(fallback.resolve())
+            with open(path, encoding="utf-8") as handle:
+                return {"path": path, "content": handle.read()}
+        
+        return {"path": path, "content": None}
+
     def stats(self) -> dict[str, Any]:
         stats = self.repository.stats()
         stats.update(

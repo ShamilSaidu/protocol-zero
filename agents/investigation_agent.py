@@ -85,14 +85,14 @@ Metrics snapshot: {metrics}
             confidence = 0.81
         elif incident_type == "cpu_spike":
             root_cause = "Traffic surge or inefficient request path"
-            rationale = "CPU saturation usually comes from sudden request volume or a hot loop in the service path."
+            rationale = "CPU saturation is directly measured via Prometheus metrics with high fidelity."
             recommended_action = "Scale the deployment and inspect hot code paths or recent request pattern changes."
-            confidence = 0.74
+            confidence = 0.85
         elif incident_type == "memory_spike":
             root_cause = "Memory leak or oversized working set"
-            rationale = "The pod memory working set crossed the configured threshold."
+            rationale = "Memory spike is directly measured via Prometheus metrics, indicating working set exceeded threshold."
             recommended_action = "Restart the workload in the short term and inspect allocation-heavy code paths."
-            confidence = 0.78
+            confidence = 0.87
         elif incident_type == "deployment_unavailable":
             root_cause = "Deployment rollout health issue"
             rationale = "Unavailable replicas indicate the deployment cannot maintain healthy pods."

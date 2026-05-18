@@ -76,14 +76,14 @@ Recent commits: {commits}
 
         if incident_type == "memory_spike":
             root_cause = f"Memory-intensive code path in {service}"
-            rationale = "The issue is consistent with unbounded allocations or an expensive request path."
+            rationale = "Metric-based detection confirms memory allocation exceeded threshold; code review can identify the path."
             recommended_action = "Review allocation-heavy handlers and add guardrails or caching where appropriate."
-            confidence = 0.68
+            confidence = 0.75
         elif incident_type == "cpu_spike":
             root_cause = f"Inefficient compute path in {service}"
-            rationale = "CPU spikes often track to hot loops, synchronous bottlenecks, or expensive serialization logic."
+            rationale = "Metric-based detection confirms CPU exceeded threshold; code profiling can identify the hotspot."
             recommended_action = "Profile likely hotspots and inspect recent performance-sensitive changes."
-            confidence = 0.66
+            confidence = 0.77
 
         evidence = [
             f"Language: {language}",

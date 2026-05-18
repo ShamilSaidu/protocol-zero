@@ -120,13 +120,17 @@ def postmortem_page(incident_id: str) -> str:
 @app.get("/codefixes/{incident_id}", response_class=HTMLResponse)
 def codefix_page(incident_id: str) -> str:
     incident = RUNTIME.get_incident(incident_id)
+    # Don't require incident to exist - code fix files may exist without DB entry
     if not incident:
-        raise HTTPException(status_code=404, detail="Incident not found")
-    code_fix = incident.get("state", {}).get("code_fix", {})
-    path = code_fix.get("artifact_path")
-    content = None
-    if path and Path(path).exists():
-        content = Path(path).read_text(encoding="utf-8")
+        incident = {"incident_id": incident_id, "state": {}}
+    
+    codefix = RUNTIME.get_codefix(incident_id) or {}
+    path = codefix.get("path")
+    content = codefix.get("content")
+    
+    if not content:
+        raise HTTPException(status_code=404, detail=f"No code fix found for {incident_id}")
+    
     return render_artifact_page(
         incident=incident,
         title="Code Fix Plan",
@@ -232,16 +236,20 @@ def render_artifact_markdown(content: str) -> str:
     for raw_line in content.splitlines():
         line = raw_line.rstrip()
         if line.startswith("# "):
+            # Save previous section before overwriting title (skip if empty)
+            if current_lines and any(l.strip() for l in current_lines):
+                sections.append((current_title, current_lines))
+            current_lines = []
             current_title = line[2:].strip()
             continue
         if line.startswith("## "):
-            if current_lines:
+            if current_lines and any(l.strip() for l in current_lines):
                 sections.append((current_title, current_lines))
             current_title = line[3:].strip()
             current_lines = []
             continue
         current_lines.append(line)
-    if current_lines:
+    if current_lines and any(l.strip() for l in current_lines):
         sections.append((current_title, current_lines))
 
     html_sections = []
